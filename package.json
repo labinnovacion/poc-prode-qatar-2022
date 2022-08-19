@@ -1,0 +1,18 @@
+{
+  "name": "auction-link-2022-contract",
+  "version": "1.0.0",
+  "description": "Contrato para la subasta de Criptolink 2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.14",
+    "ganache-cli": "^6.12.2",
+    "mocha": "^10.0.0",
+    "solc": "^0.8.16",
+    "web3": "^1.7.5"
+  }
+}
