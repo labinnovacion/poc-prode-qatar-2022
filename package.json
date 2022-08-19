@@ -1,7 +1,7 @@
 {
-  "name": "auction-link-2022-contract",
+  "name": "auction-2022-contract",
   "version": "1.0.0",
-  "description": "Contrato para la subasta de Criptolink 2022",
+  "description": "Contrato para la subasta de 2022",
   "main": "index.js",
   "scripts": {
     "test": "mocha"

@@ -18,8 +18,39 @@ contract Auction {
         string imgUrl;       
     }
     _Auction[] public auctions;
-
+    mapping (address => uint) roles;
     constructor(){
         //Aqui hay que asignar el owner del contrato
+        roles[msg.sender] = FOUNDER;
+    }
+
+    modifier onlyFounder(){
+        require(roles[msg.sender] == FOUNDER, "Only Founder can execute this");
+        _; 
+    }
+
+    modifier onlyAdmins(){
+        require(roles[msg.sender] == FOUNDER || roles[msg.sender] == ADMIN, 
+            "Only Founders or Admins can execute this");
+        _;
+    }
+
+    modifier onlyUsers(){
+        require(roles[msg.sender] == USER, 
+            "Only Users can execute this");
+        _;
+    }
+
+    function giveRole(address _holder, uint _newRole)  public onlyAdmins {
+        require( _newRole >= 0 && _newRole <= 3, "No tiene permisos para realizar esta accion");
+        if( _newRole == FOUNDER && roles[msg.sender] == FOUNDER){
+            roles[_holder] = _newRole;
+            roles[msg.sender] = ADMIN;
+        }
+        else{
+            if( roles[_holder] < ADMIN && _newRole < FOUNDER){
+                roles[_holder] = _newRole;
+            }
+        }
     }
 }
