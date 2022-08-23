@@ -2,12 +2,27 @@
 
 pragma solidity >=0.5.0 <0.9.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Allowlist is Ownable {
+
+    mapping( address => bool) users;
+
+    function setUserStatus(address user, bool status) public onlyOwner {
+        users[user] = status;
+    }
+
+    function getUserStatus(address user) public view returns(bool status){
+        return users[user];
+    }
+}
+
 contract Auction {
     enum State {Started, Closed, Ended, Canceled }
     uint public constant FOUNDER = 1;
     uint public constant ADMIN = 2;
     uint public constant USER = 3;
-
+    address public _allowlist;
 
     struct _Auction {
         State auctionState;
@@ -19,9 +34,10 @@ contract Auction {
     }
     _Auction[] public auctions;
     mapping (address => uint) roles;
-    constructor(){
+    constructor( /*address allowlist*/ ){
         //Aqui hay que asignar el owner del contrato
         roles[msg.sender] = FOUNDER;
+        // _allowlist = allowlist;
     }
 
     modifier onlyFounder(){
