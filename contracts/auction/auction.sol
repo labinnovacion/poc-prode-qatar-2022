@@ -1,21 +1,21 @@
 //SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.5.0 <0.9.0;
+pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+// require('@openzeppelin/contracts/access/Ownable.sol');
 
-contract Allowlist is Ownable {
+contract Allowlist{// is Ownable {
 
-    mapping( address => bool) users;
+//     mapping( address => bool) users;
 
-    function setUserStatus(address user, bool status) public onlyOwner {
-        users[user] = status;
-    }
+//     function setUserStatus(address user, bool status) public onlyOwner {
+//         users[user] = status;
+//     }
 
-    function getUserStatus(address user) public view returns(bool status){
-        return users[user];
-    }
-}
+//     function getUserStatus(address user) public view returns(bool status){
+//         return users[user];
+//     }
+ }
 
 contract Auction {
     enum State {Started, Closed, Ended, Canceled }
@@ -68,5 +68,27 @@ contract Auction {
                 roles[_holder] = _newRole;
             }
         }
+    }
+
+    //Auction Stuff
+
+    function createAuction(string memory _item, uint _step) public onlyAdmins {
+
+    }
+
+    function closeAuction(uint _auctionID) public onlyAdmins{
+
+    }
+
+    function reopenAuction(uint _auctionID) public onlyAdmins{
+
+    }
+
+    function cancelAuction(uint _auctionID) public onlyAdmins{
+
+    }
+
+    function bidAuction( uint _bid, uint _auctionID) public onlyUsers{
+        
     }
 }

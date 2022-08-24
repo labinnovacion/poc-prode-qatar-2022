@@ -1,7 +1,7 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const Web3 = require('web3');
 
-const { abi, evm } = require('./compileX');
+const { abi, evm } = require('./compile');
 
 const provider = new HDWalletProvider(
     'armed shaft biology square fog pond uncover drop decade upgrade negative gasp',
