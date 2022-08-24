@@ -7,9 +7,9 @@ pragma solidity ^0.8.4;
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
 
-import "@openzeppelin/contracts@4.7.1/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts@4.7.1/security/Pausable.sol";
-import "@openzeppelin/contracts@4.7.1/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 /// @custom:security-contact araujo_matias@redlink.com.ar
 contract CryptoLink is ERC20, Pausable, AccessControl {
