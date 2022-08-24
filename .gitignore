@@ -851,3 +851,4 @@ node_modules/ganache-cli/node_modules/wrappy/LICENSE
 node_modules/ganache-cli/node_modules/y18n/LICENSE
 node_modules/ganache-cli/node_modules/yargs/LICENSE
 node_modules
+hardhat.config.js
