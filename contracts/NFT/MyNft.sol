@@ -12,7 +12,7 @@ contract MyNFT is ERC721 {
     address private owner;
 
     constructor() ERC721("Prode NFT", "PNFT") {
-        owner = msg.sender;
+        owner = msg.sender; //colocar el address del contrato del prode
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
