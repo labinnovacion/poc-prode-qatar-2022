@@ -1,5 +1,5 @@
 {
     "name": "Argentina - Mexico",
     "description": "Esta este es un ejemplo de descripción",
-    "image": "https://raw.githubusercontent.com/labinnovacion/poc-prode-qatar-2022/main/contracts/NFT/images/62e9ec549bfca97afc640022.jpg"
+    "image": "https://raw.githubusercontent.com/labinnovacion/poc-prode-qatar-2022/main/contracts/NFT/images/62e9ec549bfca97afc640022.png"
 }
