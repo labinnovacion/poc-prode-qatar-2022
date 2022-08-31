@@ -887,3 +887,4 @@ artifacts/contracts/auction/auction.sol/IAllowlist.dbg.json
 artifacts/contracts/auction/auction.sol/IAllowlist.json
 artifacts/hardhat/console.sol/console.dbg.json
 artifacts/hardhat/console.sol/console.json
+hardhat.config.js
