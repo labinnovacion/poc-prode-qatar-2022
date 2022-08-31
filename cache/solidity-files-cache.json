@@ -480,8 +480,8 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/auction/auction.sol": {
-      "lastModificationDate": 1661520508691,
-      "contentHash": "0e003af7532fe842e0febd2f1c852c5e",
+      "lastModificationDate": 1661895645081,
+      "contentHash": "e6f91d7de6b32e29a9660d3c495afb58",
       "sourceName": "contracts/auction/auction.sol",
       "solcConfig": {
         "version": "0.8.9",

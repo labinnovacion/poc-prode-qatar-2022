@@ -35,10 +35,48 @@ describe('Auction', () => {
 
         await auction.createAuction("Baffle","http://elserver//baffle.jpg", 10);
 
-        console.log("I want to see the auctions");
-        console.log(auction.auctions);
-        const aa = auction.auctions[0];
+        const count = await auction.getAuctionsCount();
+        // console.log("Auctions:", count);
+        const auctions = await auction.getAuctions();
+        // console.log(auctions[0].item);
+        
+        // console.log("Is Equal:", count == 1);
+        // const aa = auction.auctions[0];
 
-        expect(aa.item).to.equal("Baffle");
+        expect(count).to.equal(1);
+        expect(auctions[0].item).to.equals("Baffle");
     });
+
+    it('Create two Auctions', async () => {
+        const [owner] = await ethers.getSigners();
+
+        await auction.createAuction("Baffle","http://elserver//baffle.jpg", 10);
+        await auction.createAuction("Amplificador","http://elserver//amplificador.jpg", 10);
+
+        const count = await auction.getAuctionsCount();
+        // console.log("Auctions:", count);
+        const auctions = await auction.getAuctions();
+        // console.log(auctions[0].item);
+        
+        // console.log("Is Equal:", count == 1);
+        // const aa = auction.auctions[0];
+
+        expect(count).to.equal(2);
+        expect(auctions[0].item).to.equals("Baffle");
+        expect(auctions[1].item).to.equals("Amplificador");
+    });
+
+    it('Admin try to Bid Auction', async () => {
+        const [owner] = await ethers.getSigners();
+
+        await auction.createAuction("Baffle","http://elserver//baffle.jpg", 10);
+
+        try{
+            await auction.bidAuction(20, 0);
+            
+        } catch(error) {
+
+        }
+    });
+
 });

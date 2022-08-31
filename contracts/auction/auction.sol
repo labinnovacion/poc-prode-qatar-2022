@@ -84,9 +84,6 @@ contract Auction {
     //Auction Stuff
 
     function createAuction(string memory _item, string memory _imgUrl, uint _step) public onlyAdmins {
-        console.log("item: %s", _item);
-        console.log("imgUrl: %s", _imgUrl);
-        console.log("step: %d", _step);
         _Auction memory initAuction = _Auction({
             auctionState: State.Started,
             highestBidder: msg.sender,
@@ -99,9 +96,18 @@ contract Auction {
         auctions.push(initAuction);
     }
 
-    // function getAuctios() public view returns( _Auction[]  ){
-    //     return auctions;
-    // }
+    function getAuctionsCount() public view returns( uint ){
+        return auctions.length;
+    }
+
+    function getAuctions() public view returns( _Auction[] memory  ){
+        _Auction[] memory auct = new _Auction[](auctions.length) ;
+        for( uint i = 0; i < auctions.length; i++ ){
+            _Auction storage auction = auctions[i];
+            auct[i] = auction;
+        }
+        return auct;
+    }
 
     function closeAuction(uint _auctionID) public onlyAdmins{
 
