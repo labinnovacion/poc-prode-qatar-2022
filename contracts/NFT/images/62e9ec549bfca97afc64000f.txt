@@ -1,5 +1,0 @@
-{
-    "name": "Argentina - Arabia Saudita",
-    "description": "Esta este es un ejemplo de descripción",
-    "image": "https://raw.githubusercontent.com/labinnovacion/poc-prode-qatar-2022/main/contracts/NFT/images/62e9ec549bfca97afc64000f.jpg"
-}

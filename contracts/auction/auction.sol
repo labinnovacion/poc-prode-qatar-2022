@@ -2,20 +2,11 @@
 
 pragma solidity ^0.8.9;
 
-// require('@openzeppelin/contracts/access/Ownable.sol');
+import "hardhat/console.sol";
 
-contract Allowlist{// is Ownable {
-
-//     mapping( address => bool) users;
-
-//     function setUserStatus(address user, bool status) public onlyOwner {
-//         users[user] = status;
-//     }
-
-//     function getUserStatus(address user) public view returns(bool status){
-//         return users[user];
-//     }
- }
+interface IAllowlist{
+    function getUserStatus(address user) external view returns(bool status);
+}
 
 contract Auction {
     enum State {Started, Closed, Ended, Canceled }
@@ -33,11 +24,14 @@ contract Auction {
         string imgUrl;       
     }
     _Auction[] public auctions;
-    mapping (address => uint) roles;
-    constructor( /*address allowlist*/ ){
+    mapping (address => uint) public roles;
+    
+
+    constructor( address allowlist ){
         //Aqui hay que asignar el owner del contrato
         roles[msg.sender] = FOUNDER;
-        // _allowlist = allowlist;
+        _allowlist = allowlist;
+        // console.log("Allowlist addr: ", _allowlist);
     }
 
     modifier onlyFounder(){
@@ -52,29 +46,62 @@ contract Auction {
     }
 
     modifier onlyUsers(){
-        require(roles[msg.sender] == USER, 
+        require(IAllowlist(_allowlist).getUserStatus( msg.sender), 
             "Only Users can execute this");
         _;
     }
 
     function giveRole(address _holder, uint _newRole)  public onlyAdmins {
+        // console.log("giveRole _holder: %s  _newRole:%d", _holder, _newRole);
         require( _newRole >= 0 && _newRole <= 3, "No tiene permisos para realizar esta accion");
+        // console.log("giveRole PASS Require");
         if( _newRole == FOUNDER && roles[msg.sender] == FOUNDER){
+            // console.log("No deberia estar pasando");
             roles[_holder] = _newRole;
             roles[msg.sender] = ADMIN;
         }
         else{
-            if( roles[_holder] < ADMIN && _newRole < FOUNDER){
+            // console.log("Araca");
+            // console.log("roles(_holder): %d", roles[_holder]);
+
+            if( roles[_holder] < ADMIN && _newRole < USER){
+                // console.log("_handler: %s have rol: %d", _holder, _newRole);                
                 roles[_holder] = _newRole;
             }
         }
     }
 
+    function checkRole( address _holder, uint _role) public view returns(bool){
+        bool result = false;
+        if(roles[_holder] == _role ){
+            result = true;
+        }
+        else {
+            result = false;
+        }
+        return result;
+    }
     //Auction Stuff
 
-    function createAuction(string memory _item, uint _step) public onlyAdmins {
+    function createAuction(string memory _item, string memory _imgUrl, uint _step) public onlyAdmins {
+        console.log("item: %s", _item);
+        console.log("imgUrl: %s", _imgUrl);
+        console.log("step: %d", _step);
+        _Auction memory initAuction = _Auction({
+            auctionState: State.Started,
+            highestBidder: msg.sender,
+            highestBid: 0,
+            step: _step,
+            item: _item,
+            imgUrl: _imgUrl
+        });
 
+        auctions.push(initAuction);
     }
+
+    // function getAuctios() public view returns( _Auction[]  ){
+    //     return auctions;
+    // }
 
     function closeAuction(uint _auctionID) public onlyAdmins{
 
