@@ -883,3 +883,6 @@ artifacts/contracts/auction/auction.sol/IAllowlist.dbg.json
 artifacts/contracts/auction/auction.sol/IAllowlist.json
 artifacts/hardhat/console.sol/console.dbg.json
 artifacts/hardhat/console.sol/console.json
+artifacts/build-info/fc170b6299945b8a496a5a9f548282bb.json
+artifacts/contracts/auction/auction.sol/ERC20Interface.dbg.json
+artifacts/contracts/auction/auction.sol/ERC20Interface.json
