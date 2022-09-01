@@ -4,6 +4,18 @@ pragma solidity ^0.8.9;
 
 import "hardhat/console.sol";
 
+interface ERC20Interface {
+    function totalSupply() external view returns (uint);
+    function balanceOf(address tokenOwner) external view returns (uint balance);
+    function transfer(address to, uint tokens) external returns (bool success);
+    function allowance(address tokenOwner, address spender) external view returns (uint remaining);
+    function approve(address spender, uint tokens) external returns (bool success);
+    function transferFrom(address from, address to, uint tokens) external returns (bool success);
+    
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+
 interface IAllowlist{
     function getUserStatus(address user) external view returns(bool status);
 }
@@ -14,6 +26,8 @@ contract Auction {
     uint public constant ADMIN = 2;
     uint public constant USER = 3;
     address public _allowlist;
+
+    address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //Cryptolink2 Address
 
     struct _Auction {
         State auctionState;
@@ -49,6 +63,10 @@ contract Auction {
         require(IAllowlist(_allowlist).getUserStatus( msg.sender), 
             "Only Users can execute this");
         _;
+    }
+
+    function setERC20Contract( address _erc20_contract ) public onlyAdmins {
+        erc20_contract = _erc20_contract;
     }
 
     function giveRole(address _holder, uint _newRole)  public onlyAdmins {
@@ -110,18 +128,50 @@ contract Auction {
     }
 
     function closeAuction(uint _auctionID) public onlyAdmins{
-
+        _Auction storage _auction = auctions[_auctionID];
+        
+        require(_auction.auctionState == State.Started);
+        _auction.auctionState = State.Closed;
     }
 
     function reopenAuction(uint _auctionID) public onlyAdmins{
+        _Auction storage _auction = auctions[_auctionID];
 
+        require(_auction.auctionState == State.Closed);
+        _auction.auctionState = State.Started;
     }
 
     function cancelAuction(uint _auctionID) public onlyAdmins{
+        _Auction storage _auction = auctions[_auctionID];
 
+        //TODO: Hay que ver como se hace la devolucion de tokens al apostador
+        // _auction.highestBidder.transfer(address(erc20_contract).balance);
+        _auction.auctionState = State.Canceled;
     }
 
-    function bidAuction( uint _bid, uint _auctionID) public onlyUsers{
-        
+    function bidAuction( uint _bid, uint _auctionID) public payable onlyUsers{
+        _Auction storage _auction = auctions[_auctionID];
+
+        require(_auction.auctionState == State.Started, "La subasta se encuentra cerrada");
+        require(msg.sender.balance >= _bid, "Fondos insuficientes");
+        require(_bid >= _auction.highestBid + _auction.step, "La puja debe ser mas alta");
+
+        //Verifica que no es la primer oferta
+        if( _auction.highestBid > 0){
+            // Se le devuelven los tokens al postor anterior
+            
+            //TODO: Ver como devolver los Tokens... ais evidentemente NO
+            // _auction.highestBidder.transfer(_auction.highestBid);
+        }
+
+        //TODO:Hay que hacer algo para que los tokens del jugador se carguen en el Balance del contrato?
+
+        // Actualizo los datos del nuevo jugador
+        _auction.highestBid = msg.value;
+        _auction.highestBidder = msg.sender;
+    }
+
+    function rescueERC20( address _token, uint256 _amount) public onlyFounder {
+        ERC20Interface(_token).transfer(msg.sender, _amount);
     }
 }
