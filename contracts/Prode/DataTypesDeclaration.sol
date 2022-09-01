@@ -4,10 +4,11 @@ pragma solidity >=0.5.0 <0.9.0;
     
     /*** Tipos predefinidos de datos    ***/
 enum MatchState { notplayed, played }
-enum MatchResult { RESERVED, A_WINS, B_WINS, TIED}
+enum MatchResult { RESERVED, A_WINS, TIED, B_WINS}
 enum MatchType {_Group, _8VO,_4TO,_Semifinal,_Final}
 enum MatchPenalty {RESERVED,A_WINS,B_WINS}
-enum BetState { NO_PRIZE, UNCLAIMED, CLAIMED}
+enum BetState { NOT_DEFINED, DEFINED, CLAIMED}
+enum ReturnStatus { RET_OK, RET_ERROR}
 
 struct Team {
     string id;
@@ -17,7 +18,6 @@ struct Team {
 
 struct Match
 {
-    string id;
     uint256 matchDate;
     MatchState status;
     MatchResult result;
@@ -27,12 +27,13 @@ struct Match
     uint8 goalB;
     MatchType typeMatch;
     MatchPenalty resultPenalty;
+    bool betAllowed;
 }
 
 struct Bet{
-    string MatchId;
     uint8 goalA;
     uint8 goalB;
     MatchPenalty resultPenalty;
+    uint betAmount;
     BetState _state;
 }
