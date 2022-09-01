@@ -160,7 +160,7 @@ contract Auction {
         if( _auction.highestBid > 0){
             // Se le devuelven los tokens al postor anterior
             
-            //TODO: Ver como devolver los Tokens... ais evidentemente NO
+            //TODO: Ver como devolver los Tokens... asi evidentemente NO
             // _auction.highestBidder.transfer(_auction.highestBid);
         }
 

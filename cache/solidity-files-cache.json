@@ -480,8 +480,8 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/auction/auction.sol": {
-      "lastModificationDate": 1662034753166,
-      "contentHash": "e6f91d7de6b32e29a9660d3c495afb58",
+      "lastModificationDate": 1662064272574,
+      "contentHash": "a3adcaf06a21c4033b523e5195ae1ad2",
       "sourceName": "contracts/auction/auction.sol",
       "solcConfig": {
         "version": "0.8.16",
@@ -514,6 +514,7 @@
       ],
       "artifacts": [
         "Auction",
+        "ERC20Interface",
         "IAllowlist"
       ]
     },
