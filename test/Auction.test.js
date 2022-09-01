@@ -1,5 +1,6 @@
-const { expect } = require("chai");
+const { expect, assert } = require("chai");
 const { ethers } = require("hardhat");
+const { assertHardhatInvariant } = require("hardhat/internal/core/errors");
 const { boolean } = require("hardhat/internal/core/params/argumentTypes");
 
 let _Allowlist;
@@ -30,18 +31,34 @@ describe('Auction', () => {
         // expect(true).is.true;
     });
 
+    it('add player to allowlist', async () => {
+        const [owner, player1, player2] = await ethers.getSigners();
+
+        await allowlist.setUserStatus(player1.address, true);
+        await allowlist.setUserStatus(player2.address, false);
+
+        try{
+            const player1Status = await allowlist.getUserStatus(player1.address);
+            const player2Status = await allowlist.getUserStatus(player2.address);
+
+            // console.log("Player " + player1.address + " Status:" + player1Status);
+            expect(player1Status).is.true;
+            // console.log("Player " + player2.address + " Status:" + player2Status);
+            expect(player2Status).is.false;
+        }
+        catch(error){
+            assert(false,error);
+        }
+
+    });
+
     it('Create an Auction', async () => {
         const [owner] = await ethers.getSigners();
 
         await auction.createAuction("Baffle","http://elserver//baffle.jpg", 10);
 
         const count = await auction.getAuctionsCount();
-        // console.log("Auctions:", count);
         const auctions = await auction.getAuctions();
-        // console.log(auctions[0].item);
-        
-        // console.log("Is Equal:", count == 1);
-        // const aa = auction.auctions[0];
 
         expect(count).to.equal(1);
         expect(auctions[0].item).to.equals("Baffle");
@@ -54,12 +71,7 @@ describe('Auction', () => {
         await auction.createAuction("Amplificador","http://elserver//amplificador.jpg", 10);
 
         const count = await auction.getAuctionsCount();
-        // console.log("Auctions:", count);
         const auctions = await auction.getAuctions();
-        // console.log(auctions[0].item);
-        
-        // console.log("Is Equal:", count == 1);
-        // const aa = auction.auctions[0];
 
         expect(count).to.equal(2);
         expect(auctions[0].item).to.equals("Baffle");
@@ -73,9 +85,29 @@ describe('Auction', () => {
 
         try{
             await auction.bidAuction(20, 0);
+            assert(false);
             
         } catch(error) {
+            assert(true, error);
+        }
+    });
 
+    it('Player try to create an Auction', async() => {
+        const [owner, admin, player1] = await ethers.getSigners();
+
+        await allowlist.setUserStatus(player1.address, true);
+
+        try {
+            await   auction.connect(player1).createAuction({
+                '_item': 'Delorean',
+                '_imgurl': 'https://elserver//delorean.jpg', 
+                '_step': 10
+            });
+            assert(false,"Some Error");
+        }
+        catch(error){
+            // console.log(error);
+            assert(true, error);
         }
     });
 

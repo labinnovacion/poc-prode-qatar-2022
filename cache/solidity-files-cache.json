@@ -6,7 +6,7 @@
       "contentHash": "008ccb29d0b3c20b8cb870615a86c751",
       "sourceName": "contracts/Allowlist/Allowlist.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -43,7 +43,7 @@
       "contentHash": "e436cea06129be2c73cda4b1acc848b5",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -80,7 +80,7 @@
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -115,7 +115,7 @@
       "contentHash": "e6ef731d275b1e7b2995f00fa56d9dab",
       "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -155,7 +155,7 @@
       "contentHash": "57c84298234411cea19c7c284d86be8b",
       "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -190,7 +190,7 @@
       "contentHash": "cf46906c4035f51639a22265066a9e78",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -225,7 +225,7 @@
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -262,7 +262,7 @@
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -297,7 +297,7 @@
       "contentHash": "3626d499180770f571b8dadff43c7837",
       "sourceName": "contracts/ERC20Token/ERC20Token.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -336,7 +336,7 @@
       "contentHash": "af7bd64e1cfefbf6cb07f2adc1a25392",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -375,7 +375,7 @@
       "contentHash": "25c8108f36fdd472bc78d4c4af240c11",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -412,7 +412,7 @@
       "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -447,7 +447,7 @@
       "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -480,11 +480,11 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/auction/auction.sol": {
-      "lastModificationDate": 1661895645081,
+      "lastModificationDate": 1662034753166,
       "contentHash": "e6f91d7de6b32e29a9660d3c495afb58",
       "sourceName": "contracts/auction/auction.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -522,7 +522,7 @@
       "contentHash": "4ff3cd2f6272c9a6516e9ee4f2b967d3",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
-        "version": "0.8.9",
+        "version": "0.8.16",
         "settings": {
           "optimizer": {
             "enabled": false,
