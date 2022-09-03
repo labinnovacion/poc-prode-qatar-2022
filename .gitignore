@@ -1,3 +1,14 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+#Hardhat files
+cache
+artifacts
+
 node_modules/ganache-cli/LICENSE
 node_modules/ganache-cli/node_modules/@types/bn.js/LICENSE
 node_modules/ganache-cli/node_modules/@types/node/LICENSE
