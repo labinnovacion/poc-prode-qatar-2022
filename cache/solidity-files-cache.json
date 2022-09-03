@@ -480,8 +480,8 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/auction/auction.sol": {
-      "lastModificationDate": 1662064272574,
-      "contentHash": "a3adcaf06a21c4033b523e5195ae1ad2",
+      "lastModificationDate": 1662223657708,
+      "contentHash": "271ddb0d0be051d62dd54543e1d9368c",
       "sourceName": "contracts/auction/auction.sol",
       "solcConfig": {
         "version": "0.8.16",
@@ -507,14 +507,14 @@
         }
       },
       "imports": [
-        "hardhat/console.sol"
+        "hardhat/console.sol",
+        "../ERC20Token/IERC20Token.sol"
       ],
       "versionPragmas": [
         "^0.8.9"
       ],
       "artifacts": [
         "Auction",
-        "ERC20Interface",
         "IAllowlist"
       ]
     },
@@ -551,6 +551,41 @@
       ],
       "artifacts": [
         "console"
+      ]
+    },
+    "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/ERC20Token/IERC20Token.sol": {
+      "lastModificationDate": 1662220939008,
+      "contentHash": "8e88e672b45e97b166578ffaeedea07a",
+      "sourceName": "contracts/ERC20Token/IERC20Token.sol",
+      "solcConfig": {
+        "version": "0.8.16",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "ICryptoLink"
       ]
     }
   }

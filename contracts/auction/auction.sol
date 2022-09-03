@@ -3,18 +3,7 @@
 pragma solidity ^0.8.9;
 
 import "hardhat/console.sol";
-
-interface ERC20Interface {
-    function totalSupply() external view returns (uint);
-    function balanceOf(address tokenOwner) external view returns (uint balance);
-    function transfer(address to, uint tokens) external returns (bool success);
-    function allowance(address tokenOwner, address spender) external view returns (uint remaining);
-    function approve(address spender, uint tokens) external returns (bool success);
-    function transferFrom(address from, address to, uint tokens) external returns (bool success);
-    
-    event Transfer(address indexed from, address indexed to, uint tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
-}
+import "../ERC20Token/IERC20Token.sol"; //Should be Cryptolink
 
 interface IAllowlist{
     function getUserStatus(address user) external view returns(bool status);
@@ -22,9 +11,9 @@ interface IAllowlist{
 
 contract Auction {
     enum State {Started, Closed, Ended, Canceled }
-    uint public constant FOUNDER = 1;
-    uint public constant ADMIN = 2;
-    uint public constant USER = 3;
+    uint8 public constant FOUNDER = 1;
+    uint8 public constant ADMIN = 2;
+    uint8 public constant USER = 3;
     address public _allowlist;
 
     address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //Cryptolink2 Address
@@ -38,6 +27,7 @@ contract Auction {
         string imgUrl;       
     }
     _Auction[] public auctions;
+    mapping (string => _Auction) mauctions;
     mapping (address => uint) public roles;
     
 
@@ -71,7 +61,7 @@ contract Auction {
 
     function giveRole(address _holder, uint _newRole)  public onlyAdmins {
         // console.log("giveRole _holder: %s  _newRole:%d", _holder, _newRole);
-        require( _newRole >= 0 && _newRole <= 3, "No tiene permisos para realizar esta accion");
+        require( _newRole >= 0 && _newRole < 3, "No tiene permisos para realizar esta accion");
         // console.log("giveRole PASS Require");
         if( _newRole == FOUNDER && roles[msg.sender] == FOUNDER){
             // console.log("No deberia estar pasando");
@@ -87,6 +77,10 @@ contract Auction {
                 roles[_holder] = _newRole;
             }
         }
+    }
+
+    function setAdmin(address _newAdmin ) public onlyAdmins {
+        roles[_newAdmin] = ADMIN;
     }
 
     function checkRole( address _holder, uint _role) public view returns(bool){
@@ -111,6 +105,7 @@ contract Auction {
             imgUrl: _imgUrl
         });
 
+        mauctions[_item]=initAuction;
         auctions.push(initAuction);
     }
 
@@ -125,6 +120,12 @@ contract Auction {
             auct[i] = auction;
         }
         return auct;
+    }
+
+    function auctionState(uint _auctionID) public view returns(State){
+        // uint auctionState = auctions[_auctionID].auctionState;
+        // return auctionState;
+        return auctions[_auctionID].auctionState;
     }
 
     function closeAuction(uint _auctionID) public onlyAdmins{
@@ -144,12 +145,13 @@ contract Auction {
     function cancelAuction(uint _auctionID) public onlyAdmins{
         _Auction storage _auction = auctions[_auctionID];
 
+        // uint256 balance = erc20_contract.balance;
         //TODO: Hay que ver como se hace la devolucion de tokens al apostador
         // _auction.highestBidder.transfer(address(erc20_contract).balance);
         _auction.auctionState = State.Canceled;
     }
 
-    function bidAuction( uint _bid, uint _auctionID) public payable onlyUsers{
+    function bidAuction( uint _bid, uint _auctionID) public onlyUsers{
         _Auction storage _auction = auctions[_auctionID];
 
         require(_auction.auctionState == State.Started, "La subasta se encuentra cerrada");
@@ -162,16 +164,17 @@ contract Auction {
             
             //TODO: Ver como devolver los Tokens... asi evidentemente NO
             // _auction.highestBidder.transfer(_auction.highestBid);
+            ICryptoLink(erc20_contract).transferFrom(address(this), _auction.highestBidder, _bid);
         }
 
         //TODO:Hay que hacer algo para que los tokens del jugador se carguen en el Balance del contrato?
-
+        ICryptoLink(erc20_contract).transferFrom(msg.sender, address(this), _bid);
         // Actualizo los datos del nuevo jugador
-        _auction.highestBid = msg.value;
+        _auction.highestBid = _bid;
         _auction.highestBidder = msg.sender;
     }
 
     function rescueERC20( address _token, uint256 _amount) public onlyFounder {
-        ERC20Interface(_token).transfer(msg.sender, _amount);
+        ICryptoLink(_token).transferFrom(address(this), msg.sender, _amount);
     }
 }

@@ -1,17 +1,21 @@
 const { expect, assert } = require("chai");
 const { ethers } = require("hardhat");
-const { assertHardhatInvariant } = require("hardhat/internal/core/errors");
-const { boolean } = require("hardhat/internal/core/params/argumentTypes");
 
 let _Allowlist;
 let _Auction;
+let _CryptoLink;
 let allowlist;
 let auction;
+let cryptolink;
+
 beforeEach(async () => {
     _Allowlist = await ethers.getContractFactory("Allowlist");
     _Auction = await ethers.getContractFactory("Auction");
+    _CryptoLink = await ethers.getContractFactory("CryptoLink");
     allowlist = await _Allowlist.deploy();
     auction = await _Auction.deploy(allowlist.address);
+    cryptolink = await _CryptoLink.deploy();
+    auction.setERC20Contract(cryptolink.address);
 });
 
 describe('Auction', () => {
@@ -93,21 +97,157 @@ describe('Auction', () => {
     });
 
     it('Player try to create an Auction', async() => {
-        const [owner, admin, player1] = await ethers.getSigners();
+        const [owner, player1] = await ethers.getSigners();
 
         await allowlist.setUserStatus(player1.address, true);
 
         try {
-            await   auction.connect(player1).createAuction({
-                '_item': 'Delorean',
-                '_imgurl': 'https://elserver//delorean.jpg', 
-                '_step': 10
-            });
-            assert(false,"Some Error");
+            await   auction.connect(player1).createAuction(
+                'Delorean',
+                'https://elserver//delorean.jpg', 
+                10
+            );
+            assert.fail;
         }
         catch(error){
-            // console.log(error);
-            assert(true, error);
+            assert.ok;
+        }
+    });
+
+    it('Admin close an Auction', async() => {
+        const [owner, admin1, admin2] = await ethers.getSigners();
+
+        await auction.setAdmin(admin1.address);
+        await auction.setAdmin(admin2.address);
+
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+        try{
+            await auction.connect(admin2).closeAuction(auctionId);
+            assert.ok;
+        }
+        catch( error){
+            assert.fail;
+        }
+    });
+
+    it('Player try to close an Auction', async() => {
+        const [owner, admin1, player] = await ethers.getSigners();
+
+        await auction.setAdmin(admin1.address);
+        await allowlist.setUserStatus(player.address, true);
+
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+        try{
+            await auction.connect(player).closeAuction(auctionId);
+            assert.fail;
+        }
+        catch( error){
+            assert.ok;
+        }
+    });
+
+    it('Admin try to close closed Auction', async() => {
+        const [owner, admin1, admin2] = await ethers.getSigners();
+
+        await auction.setAdmin(admin1.address);
+        await auction.setAdmin(admin2.address);
+
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+        await auction.connect(admin1).closeAuction(auctionId);
+        try{
+            await auction.connect(admin2).closeAuction(auctionId);
+            assert.fail;
+        }
+        catch( error){
+            assert.ok;
+        }
+    });
+
+    it('Admin reopen an Auction', async() => {
+        const [owner, admin1, admin2] = await ethers.getSigners();
+
+        await auction.setAdmin(admin1.address);
+        await auction.setAdmin(admin2.address);
+
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+        await auction.connect(admin1).closeAuction(auctionId);
+        try{
+            await auction.connect(admin2).reopenAuction(auctionId);
+            assert.ok;
+        }
+        catch( error){
+            assert.fail;
+        }
+    });
+
+    it('Admin try to reopen an unclosed Auction', async() => {
+        const [owner, admin1, admin2] = await ethers.getSigners();
+
+        await auction.setAdmin(admin1.address);
+        await auction.setAdmin(admin2.address);
+
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+
+        try{
+            await auction.connect(admin2).reopenAuction(auctionId);
+            assert.fail;
+        }
+        catch( error){
+            assert.ok;
+        }
+    });
+
+    it('bid an Auction', async() => {
+        const [owner, admin1, player] = await ethers.getSigners();
+
+        await auction.setAdmin(admin1.address);
+        await allowlist.setUserStatus(player.address, true);
+        await cryptolink.mint(player.address, 1000);
+        await cryptolink.approve(player.address, 100000000000);
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+
+        try{
+            const playerPreBalance = await cryptolink.balanceOf(player.address);
+            console.log("Balance Pre:" + playerPreBalance);
+            await auction.connect(player).bidAuction(20, auctionId);
+            const playerPosBalance = await cryptolink.balanceOf(player.address);
+            console.log("Balance Pos:" + playerPosBalance);
+            
+            assert.fail;
+        }
+        catch( error){
+            console.log(error);
+            assert.ok;
         }
     });
 
