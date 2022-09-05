@@ -223,7 +223,7 @@ describe('Auction', () => {
         }
     });
 
-    it('bid an Auction', async() => {
+    it('player bid an Auction', async() => {
         const [owner, admin1, player] = await ethers.getSigners();
 
         // Definimos el admin
@@ -256,7 +256,7 @@ describe('Auction', () => {
         expect(_auctions[auctionId].highestBid).is.equal(20);
     });
 
-    it('outbid an Auction', async() => {
+    it('player outbid an Auction', async() => {
         const [owner, admin1, player1, player2] = await ethers.getSigners();
 
         // Definimos el admin
@@ -284,7 +284,7 @@ describe('Auction', () => {
 
         const p2PreBal = await cryptolink.balanceOf(player2.address);
         
-        console.log("Contract Balance:" + await cryptolink.balanceOf(auction.address));
+        // console.log("Contract Balance:" + await cryptolink.balanceOf(auction.address));
 
         // Puja del jugador 2
         await cryptolink.connect(player2).approve(auction.address, 50);
@@ -299,4 +299,94 @@ describe('Auction', () => {
         expect(_auctions[auctionId].highestBidder).is.equal(player2.address); 
         expect(_auctions[auctionId].highestBid).is.equal(50);
     });
+
+    it('Admin try to bid an Auction', async() => {
+        const [owner, admin1, admin2] = await ethers.getSigners();
+
+        // Definimos el admin
+        await auction.setAdmin(admin1.address);
+        await auction.setAdmin(admin2.address);
+        
+        // Asignamos token al jugador
+        await cryptolink.mint(admin2.address, 1000);
+        
+        // Creamos la subasta
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+
+        const playerPreBalance = await cryptolink.balanceOf(admin2.address);
+        // console.log("Balance Pre:" + playerPreBalance);
+
+        try{
+            // El jugador autoriza la transaccion
+            await cryptolink.connect(admin2).approve(auction.address, 20);
+            // Se realiza la puja
+            await auction.connect(admin2).bidAuction(20, auctionId);
+
+            assert.fail;
+        } catch( error ){
+            assert.ok;
+        }
+
+        const playerPosBalance = await cryptolink.balanceOf(admin2.address);
+        // console.log("Balance Pos:" + playerPosBalance);
+        expect(playerPreBalance-playerPosBalance).is.equal(0);
+        const _auctions = await auction.getAuctions();
+        expect(_auctions[auctionId].highestBidder).is.equal(admin1.address); 
+        expect(_auctions[auctionId].highestBid).is.equal(0);
+    });
+
+    it('player try to outbid an Auction with less amount than min step', async() => {
+        const [owner, admin1, player1, player2] = await ethers.getSigners();
+
+        // Definimos el admin
+        await auction.setAdmin(admin1.address);
+        await allowlist.setUserStatus(player1.address, true);
+        await allowlist.setUserStatus(player2.address, true);
+        
+        // Asignamos token al jugador
+        await cryptolink.mint(player1.address, 1000);
+        await cryptolink.mint(player2.address, 1000);
+        
+        // Creamos la subasta
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+
+        // console.log("Balance Pre:" + playerPreBalance);
+        // Puja del jugador 1
+        await cryptolink.connect(player1).approve(auction.address, 20);
+        await auction.connect(player1).bidAuction(20, auctionId);
+        const p1PreBal = await cryptolink.balanceOf(player1.address);
+
+        const p2PreBal = await cryptolink.balanceOf(player2.address);
+        
+        // console.log("Contract Balance:" + await cryptolink.balanceOf(auction.address));
+
+        try{
+            // Puja del jugador 2
+            await cryptolink.connect(player2).approve(auction.address, 25);
+            await auction.connect(player2).bidAuction(25, auctionId);
+            assert.fail;
+        } catch(error){
+            assert.ok;
+        }
+        
+        const p1PosBal = await cryptolink.balanceOf(player1.address);
+        const p2PosBal = await cryptolink.balanceOf(player2.address);
+        
+        expect(p1PreBal-p1PosBal).is.equal(0);
+        expect(p2PreBal-p2PosBal).is.equal(0);
+        const _auctions = await auction.getAuctions();
+        expect(_auctions[auctionId].highestBidder).is.equal(player1.address); 
+        expect(_auctions[auctionId].highestBid).is.equal(20);
+    });
+
 });
