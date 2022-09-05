@@ -480,8 +480,8 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/auction/auction.sol": {
-      "lastModificationDate": 1662223657708,
-      "contentHash": "271ddb0d0be051d62dd54543e1d9368c",
+      "lastModificationDate": 1662384013617,
+      "contentHash": "e8873f3de69e1754edff3ec9e8b81f1f",
       "sourceName": "contracts/auction/auction.sol",
       "solcConfig": {
         "version": "0.8.16",
@@ -554,8 +554,8 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/ERC20Token/IERC20Token.sol": {
-      "lastModificationDate": 1662220939008,
-      "contentHash": "8e88e672b45e97b166578ffaeedea07a",
+      "lastModificationDate": 1662383404077,
+      "contentHash": "3ba637ff598e712da2bebbbf75356e74",
       "sourceName": "contracts/ERC20Token/IERC20Token.sol",
       "solcConfig": {
         "version": "0.8.16",

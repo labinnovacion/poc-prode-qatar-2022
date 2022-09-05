@@ -164,7 +164,8 @@ contract Auction {
             
             //TODO: Ver como devolver los Tokens... asi evidentemente NO
             // _auction.highestBidder.transfer(_auction.highestBid);
-            ICryptoLink(erc20_contract).transferFrom(address(this), _auction.highestBidder, _bid);
+            // ICryptoLink(erc20_contract).approve(_auction.highestBidder, _bid);
+            ICryptoLink(erc20_contract).transfer(_auction.highestBidder, _auction.highestBid);
         }
 
         //TODO:Hay que hacer algo para que los tokens del jugador se carguen en el Balance del contrato?

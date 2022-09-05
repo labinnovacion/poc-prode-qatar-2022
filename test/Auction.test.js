@@ -1,4 +1,5 @@
 const { expect, assert } = require("chai");
+const { Contract } = require("ethers");
 const { ethers } = require("hardhat");
 
 let _Allowlist;
@@ -225,10 +226,14 @@ describe('Auction', () => {
     it('bid an Auction', async() => {
         const [owner, admin1, player] = await ethers.getSigners();
 
+        // Definimos el admin
         await auction.setAdmin(admin1.address);
         await allowlist.setUserStatus(player.address, true);
+        
+        // Asignamos token al jugador
         await cryptolink.mint(player.address, 1000);
-        await cryptolink.approve(player.address, 100000000000);
+        
+        // Creamos la subasta
         const auctionId = 0;
         await auction.connect(admin1).createAuction(
             'Delorean',
@@ -236,19 +241,62 @@ describe('Auction', () => {
             10
         );
 
-        try{
-            const playerPreBalance = await cryptolink.balanceOf(player.address);
-            console.log("Balance Pre:" + playerPreBalance);
-            await auction.connect(player).bidAuction(20, auctionId);
-            const playerPosBalance = await cryptolink.balanceOf(player.address);
-            console.log("Balance Pos:" + playerPosBalance);
-            
-            assert.fail;
-        }
-        catch( error){
-            console.log(error);
-            assert.ok;
-        }
+        const playerPreBalance = await cryptolink.balanceOf(player.address);
+        // console.log("Balance Pre:" + playerPreBalance);
+        // El jugador autoriza la transaccion
+        await cryptolink.connect(player).approve(auction.address, 20);
+        // Se realiza la puja
+        await auction.connect(player).bidAuction(20, auctionId);
+        const playerPosBalance = await cryptolink.balanceOf(player.address);
+        // console.log("Balance Pos:" + playerPosBalance);
+
+        expect(playerPreBalance-playerPosBalance).is.equal(20);
+        const _auctions = await auction.getAuctions();
+        expect(_auctions[auctionId].highestBidder).is.equal(player.address); 
+        expect(_auctions[auctionId].highestBid).is.equal(20);
     });
 
+    it('outbid an Auction', async() => {
+        const [owner, admin1, player1, player2] = await ethers.getSigners();
+
+        // Definimos el admin
+        await auction.setAdmin(admin1.address);
+        await allowlist.setUserStatus(player1.address, true);
+        await allowlist.setUserStatus(player2.address, true);
+        
+        // Asignamos token al jugador
+        await cryptolink.mint(player1.address, 1000);
+        await cryptolink.mint(player2.address, 1000);
+        
+        // Creamos la subasta
+        const auctionId = 0;
+        await auction.connect(admin1).createAuction(
+            'Delorean',
+            'https://elserver//delorean.jpg', 
+            10
+        );
+
+        // console.log("Balance Pre:" + playerPreBalance);
+        // Puja del jugador 1
+        await cryptolink.connect(player1).approve(auction.address, 20);
+        await auction.connect(player1).bidAuction(20, auctionId);
+        const p1PreBal = await cryptolink.balanceOf(player1.address);
+
+        const p2PreBal = await cryptolink.balanceOf(player2.address);
+        
+        console.log("Contract Balance:" + await cryptolink.balanceOf(auction.address));
+
+        // Puja del jugador 2
+        await cryptolink.connect(player2).approve(auction.address, 50);
+        await auction.connect(player2).bidAuction(50, auctionId);
+        
+        const p1PosBal = await cryptolink.balanceOf(player1.address);
+        const p2PosBal = await cryptolink.balanceOf(player2.address);
+        
+        expect(p1PreBal-p1PosBal).is.equal(-20);
+        expect(p2PreBal-p2PosBal).is.equal(50);
+        const _auctions = await auction.getAuctions();
+        expect(_auctions[auctionId].highestBidder).is.equal(player2.address); 
+        expect(_auctions[auctionId].highestBid).is.equal(50);
+    });
 });
