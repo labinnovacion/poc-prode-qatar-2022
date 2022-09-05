@@ -161,14 +161,8 @@ contract Auction {
         //Verifica que no es la primer oferta
         if( _auction.highestBid > 0){
             // Se le devuelven los tokens al postor anterior
-            
-            //TODO: Ver como devolver los Tokens... asi evidentemente NO
-            // _auction.highestBidder.transfer(_auction.highestBid);
-            // ICryptoLink(erc20_contract).approve(_auction.highestBidder, _bid);
             ICryptoLink(erc20_contract).transfer(_auction.highestBidder, _auction.highestBid);
         }
-
-        //TODO:Hay que hacer algo para que los tokens del jugador se carguen en el Balance del contrato?
         ICryptoLink(erc20_contract).transferFrom(msg.sender, address(this), _bid);
         // Actualizo los datos del nuevo jugador
         _auction.highestBid = _bid;
