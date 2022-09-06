@@ -2,21 +2,32 @@
 
 
 actor Player
-entity Frontend
-entity BackendAWS
-entity Prode 
-entity NFT
+
+== Apuesta \nCambio \nCancelacion ==
 
 Player -> Frontend : Bet(match, result, bet )
 Frontend -> Prode : Bet( #address, match, result, bet)
 Prode --> Frontend : result
 Frontend -->Player : Bet Done
-...
+
+== Resultado ==
+
 Frontend -> BackendAWS : UpdateMatch(match, result)
 BackendAWS -> Prode : updateMatch( match, result)
-...
+
+== Claim ==
+
 Player -> Frontend : Claim(...)
 Frontend -> Prode: claim(#address)
+Prode -> NFT: mint(#address, matchId)
+
+== Query NFT ==
+Frontend -> NFT: balance(#Address)
+
+== SUBASTA ==
+Player -> Frontend: bid(subasta, monto)
+Frontend -> Auction: bid(#address, auctionId, bid)
+Auction --> Frontend: Result
 
 
 @enduml
