@@ -20,7 +20,7 @@ struct Match
 {
     uint256 matchDate;
     MatchState status;
-    MatchResult result;
+    //MatchResult result;
     Team teamAid;
     Team teamBid;
     uint8 goalA;

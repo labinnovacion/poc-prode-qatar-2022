@@ -29,6 +29,15 @@ contract PRODE is Pausable, AccessControl {
     address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //TOKEN Cryptolink2 Address
     address public erc721_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //SebaNFT Address
     uint deadline = 1 hours;
+    string public constant ERROR_TRANSFER_TOKENS =
+        "Error al transferir los tokens.";
+    string public constant ERROR_MATCH_PLAYED = "Partido ya jugado.";
+    string public constant ERROR_ALLOWANCE = "No es posible gastar tus tokens.";
+    string public constant ERROR_ALREADY_CLAIMED = "Apuesta ya reclamada.";
+    string public constant ERROR_INSUFFICIENT_FUNDS = "Saldo insuficiente";
+    string public constant ERROR_OUTATIME =
+        "Fuera del hoario permitido para apostar.";
+    string public constant ERROR_BET_ZERO = "La apuesta debe ser >= 0";
 
     /*** En fase de grupos: */
     uint8 public constant PRIZE_GROUP_EXACT_MATCH = 12; //Acierto total (marcador y equipo)
@@ -107,6 +116,48 @@ contract PRODE is Pausable, AccessControl {
     }
 
     /***    Funciones del PRODE    ***/
+
+    function bet2(
+        string calldata matchId,
+        MatchPenalty penaltyResult,
+        uint8 goalA,
+        uint8 goalB,
+        uint betAmount
+    ) public {
+        //Debemos chequear que el Match no haya sido jugado.
+        require(
+            matches[matchId].status != MatchState.played,
+            ERROR_MATCH_PLAYED
+        );
+        //Debemos chequear que el Match esté en hora para apostarse.
+        require(
+            matches[matchId].matchDate >= block.timestamp + deadline,
+            ERROR_OUTATIME
+        );
+        //Debemos comprobar que no se haya claimeado.
+        require(
+            gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
+            ERROR_ALREADY_CLAIMED
+        );
+
+        //Debemos comprobar que la apuesta sea mayor o igual a cero.
+        require(betAmount >= 0, ERROR_BET_ZERO);
+
+        if (gameData[_msgSender()][matchId]._state == BetState.NOT_DEFINED) {
+            //No hay apuesta anterior, así que el procedimiento es el mismo de siempre
+        }
+
+        if (gameData[_msgSender()][matchId]._state == BetState.DEFINED) {
+            //ya hay una apuesta, tenemos que ver si hay que aumentar o retirar tokens.
+            //Si es de más, hay que quitarle tokens. Si es de menos, hay que devolverle.
+            if (gameData[_msgSender()][matchId].betAmount > betAmount) {
+                //Hay que devolverle, no sin antes modificar la apuesta, de ser necesario.
+            } else {
+                //Es igual o mayor, así que puede que solo requiera cambiar la apuesta.
+            }
+        }
+    }
+
     /**
      * @dev bet/apostar: inserta en el array de apuestas una apuesta
      * @param matchId ID del partido
@@ -125,23 +176,25 @@ contract PRODE is Pausable, AccessControl {
         //TOKEN ERC20: Verificamos que el usuario tenga suficientes tokens para apostar.
         require(
             ICryptoLink(erc20_contract).balanceOf(_msgSender()) >= betAmount,
-            "El usuario no tiene suficiente saldo."
+            ERROR_INSUFFICIENT_FUNDS
         );
         ////TOKEN ERC20: Debemos chequear que el PRODE tenga permisos para gastar estos tokens.
         require(
-            ICryptoLink(erc20_contract).allowance(_msgSender(), address(this)) >=
-                betAmount,
-            "El PRODE no tiene permisos de gastar tus tokens."
+            ICryptoLink(erc20_contract).allowance(
+                _msgSender(),
+                address(this)
+            ) >= betAmount,
+            ERROR_ALLOWANCE
         );
         //Debemos chequear que el Match no haya sido jugado.
         require(
             matches[matchId].status != MatchState.played,
-            "El partido ya fue jugado."
+            ERROR_MATCH_PLAYED
         );
         //Debemos chequear que el Match esté en hora para apostarse.
         require(
             matches[matchId].matchDate >= block.timestamp + deadline,
-            "El horario permitido para apostar ha terminado."
+            ERROR_OUTATIME
         );
         //Debemos comprobar que no haya una apuesta anterior.
         require(
@@ -151,7 +204,7 @@ contract PRODE is Pausable, AccessControl {
         //Debemos comprobar que no se haya claimeado.
         require(
             gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
-            "No se pueden realizar acciones sobre esta apuesta."
+            ERROR_ALREADY_CLAIMED
         );
 
         //OJO, el MATCH tiene que ser "notplayed", así evitamos apuestas en partidos jugados.
@@ -185,7 +238,7 @@ contract PRODE is Pausable, AccessControl {
                 );
                 return;
             } else {
-                revert("Error al transferir los tokens");
+                revert(ERROR_TRANSFER_TOKENS);
             }
         }
         return;
@@ -203,12 +256,12 @@ contract PRODE is Pausable, AccessControl {
         //Debemos chequear que el Match no haya sido jugado.
         require(
             matches[matchId].status != MatchState.played,
-            "El partido ya fue jugado."
+            ERROR_MATCH_PLAYED
         );
         //Debemos chequear que el Match esté en hora para apostarse.
         require(
             matches[matchId].matchDate >= block.timestamp - deadline,
-            "El horario permitido para apostar ha terminado."
+            ERROR_OUTATIME
         );
         //Debemos comprobar que HAYA una apuesta anterior.
         require(
@@ -218,7 +271,7 @@ contract PRODE is Pausable, AccessControl {
         //Debemos comprobar que no haya una apuesta anterior claimeada.
         require(
             gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
-            "No se pueden realizar acciones sobre esta apuesta."
+            ERROR_ALREADY_CLAIMED
         );
 
         //Tengo que copiar el estado actual de la apuesta por si la transferencia falla
