@@ -27,7 +27,6 @@ struct Match
     uint8 goalB;
     MatchType typeMatch;
     MatchPenalty resultPenalty;
-    bool betAllowed;
 }
 
 struct Bet{
@@ -35,5 +34,6 @@ struct Bet{
     uint8 goalB;
     MatchPenalty resultPenalty;
     uint betAmount;
-    BetState _state;
+    bool claimed;
+    bool isValid;
 }

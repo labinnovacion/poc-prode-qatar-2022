@@ -5,19 +5,18 @@ pragma solidity >=0.5.0 <0.9.0;
 // EIP-20: ERC-20 Token Standard
 // https://eips.ethereum.org/EIPS/eip-20
 // -----------------------------------------
-import "../ERC20Token/IERC20Token.sol"; //Should be Cryptolink
+import "../ERC20Token/ICryptoLink.sol"; //Interface de CryptoLink
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "./DataTypesDeclaration.sol";
+import "hardhat/console.sol";
 
-contract PRODE is Pausable, AccessControl {
+
+contract Prode is Pausable, AccessControl {
     /***    Roles   ***/
     //El Admin 8-)
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
-
-    //Tiene permisos para pausar TODO
-    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
     //Tiene permisos para modificar partidos
     bytes32 public constant MATCH_ROLE = keccak256("MATCH_ROLE");
@@ -29,15 +28,13 @@ contract PRODE is Pausable, AccessControl {
     address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //TOKEN Cryptolink2 Address
     address public erc721_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //SebaNFT Address
     uint deadline = 1 hours;
-    string public constant ERROR_TRANSFER_TOKENS =
-        "Error al transferir los tokens.";
+
     string public constant ERROR_MATCH_PLAYED = "Partido ya jugado.";
-    string public constant ERROR_ALLOWANCE = "No es posible gastar tus tokens.";
+    string public constant ERROR_MATCH_NOT_PLAYED = "Partido no jugado.";
     string public constant ERROR_ALREADY_CLAIMED = "Apuesta ya reclamada.";
-    string public constant ERROR_INSUFFICIENT_FUNDS = "Saldo insuficiente";
     string public constant ERROR_OUTATIME =
         "Fuera del hoario permitido para apostar.";
-    string public constant ERROR_BET_ZERO = "La apuesta debe ser >= 0";
+    string public constant ERROR_NOT_BET = "Partido sin apuesta.";
 
     /*** En fase de grupos: */
     uint8 public constant PRIZE_GROUP_EXACT_MATCH = 12; //Acierto total (marcador y equipo)
@@ -78,13 +75,12 @@ contract PRODE is Pausable, AccessControl {
         MatchPenalty penalty,
         uint betAmount
     );
-    event BetCleared(address indexed player, string matchID, uint betAmount);
     event BetClaimed(address indexed player, string matchID, uint claimedPrize);
 
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        _grantRole(PAUSER_ROLE, _msgSender());
         _grantRole(MATCH_ROLE, _msgSender());
+        _grantRole(ADMIN_ROLE, _msgSender());
     }
 
     function setERC20Contract(address _erc20_contract)
@@ -107,16 +103,23 @@ contract PRODE is Pausable, AccessControl {
         deadline = time;
     }
 
-    function pause() public onlyRole(PAUSER_ROLE) {
+    function pause() public onlyRole(ADMIN_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyRole(PAUSER_ROLE) {
+    function unpause() public onlyRole(ADMIN_ROLE) {
         _unpause();
     }
 
     /***    Funciones del PRODE    ***/
-
+    /**
+     * @dev bet2/apostar: inserta en el array de apuestas una apuesta
+     * @param matchId ID del partido
+     * @param goalA Cantidad de goles del equipo A (Local?)
+     * @param goalB Cantidad de goles del equipo B (Visitante?)
+     * @param penaltyResult Resultado de los penales {0:RESERVED,1:A_WINS,2:B_WINS}
+     * @param betAmount Cantidad de tokens apostados
+     */
     function bet2(
         string calldata matchId,
         MatchPenalty penaltyResult,
@@ -134,188 +137,40 @@ contract PRODE is Pausable, AccessControl {
             matches[matchId].matchDate >= block.timestamp + deadline,
             ERROR_OUTATIME
         );
-        //Debemos comprobar que no se haya claimeado.
-        require(
-            gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
-            ERROR_ALREADY_CLAIMED
-        );
 
-        //Debemos comprobar que la apuesta sea mayor o igual a cero.
-        require(betAmount >= 0, ERROR_BET_ZERO);
+        //Lógica de la apuesta
 
-        if (gameData[_msgSender()][matchId]._state == BetState.NOT_DEFINED) {
-            //No hay apuesta anterior, así que el procedimiento es el mismo de siempre
-        }
-
-        if (gameData[_msgSender()][matchId]._state == BetState.DEFINED) {
-            //ya hay una apuesta, tenemos que ver si hay que aumentar o retirar tokens.
-            //Si es de más, hay que quitarle tokens. Si es de menos, hay que devolverle.
-            if (gameData[_msgSender()][matchId].betAmount > betAmount) {
-                //Hay que devolverle, no sin antes modificar la apuesta, de ser necesario.
-            } else {
-                //Es igual o mayor, así que puede que solo requiera cambiar la apuesta.
-            }
-        }
-    }
-
-    /**
-     * @dev bet/apostar: inserta en el array de apuestas una apuesta
-     * @param matchId ID del partido
-     * @param goalA Cantidad de goles del equipo A (Local?)
-     * @param goalB Cantidad de goles del equipo B (Visitante?)
-     * @param penaltyResult Resultado de los penales {0:RESERVED,1:A_WINS,2:B_WINS}
-     * @param betAmount Cantidad de tokens apostados
-     */
-    function bet(
-        string calldata matchId,
-        MatchPenalty penaltyResult,
-        uint8 goalA,
-        uint8 goalB,
-        uint betAmount
-    ) public {
-        //TOKEN ERC20: Verificamos que el usuario tenga suficientes tokens para apostar.
-        require(
-            ICryptoLink(erc20_contract).balanceOf(_msgSender()) >= betAmount,
-            ERROR_INSUFFICIENT_FUNDS
-        );
-        ////TOKEN ERC20: Debemos chequear que el PRODE tenga permisos para gastar estos tokens.
-        require(
-            ICryptoLink(erc20_contract).allowance(
+        if (gameData[_msgSender()][matchId].betAmount < betAmount) {
+            //Apuesta nueva o incrementa, hay que quitarle plata al usuario
+            //Acá le quito tokens.
+            ICryptoLink(erc20_contract).transferFrom(
                 _msgSender(),
-                address(this)
-            ) >= betAmount,
-            ERROR_ALLOWANCE
-        );
-        //Debemos chequear que el Match no haya sido jugado.
-        require(
-            matches[matchId].status != MatchState.played,
-            ERROR_MATCH_PLAYED
-        );
-        //Debemos chequear que el Match esté en hora para apostarse.
-        require(
-            matches[matchId].matchDate >= block.timestamp + deadline,
-            ERROR_OUTATIME
-        );
-        //Debemos comprobar que no haya una apuesta anterior.
-        require(
-            gameData[_msgSender()][matchId]._state != BetState.DEFINED,
-            "Apuesta ya definida, primero limpiar apuesta."
-        );
-        //Debemos comprobar que no se haya claimeado.
-        require(
-            gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
-            ERROR_ALREADY_CLAIMED
-        );
-
-        //OJO, el MATCH tiene que ser "notplayed", así evitamos apuestas en partidos jugados.
-        //Si la apuesta no está definida y el partido no fue jugado, lo dejamos apostar.
-        if (
-            gameData[_msgSender()][matchId]._state == BetState.NOT_DEFINED &&
-            matches[matchId].status == MatchState.notplayed
-        ) {
-            //No hay apuesta, procedemos.
-            if (
-                //TOKEN ERC20
-                ICryptoLink(erc20_contract).transferFrom(
-                    _msgSender(),
-                    address(this),
-                    betAmount
-                )
-            ) {
-                //si la transferencia de tokens sale bien, ahí recién modificamos la apuesta.
-                gameData[_msgSender()][matchId].goalA = goalA;
-                gameData[_msgSender()][matchId].goalB = goalB;
-                gameData[_msgSender()][matchId].resultPenalty = penaltyResult;
+                address(this),
+                betAmount - gameData[_msgSender()][matchId].betAmount
+            );
+            gameData[_msgSender()][matchId].betAmount = betAmount;
+        } else {
+            if (gameData[_msgSender()][matchId].betAmount > betAmount) {
+                //Está reduciendo apuesta, devolver plata.
                 gameData[_msgSender()][matchId].betAmount = betAmount;
-                gameData[_msgSender()][matchId]._state = BetState.DEFINED;
-                emit BetCreated(
+                ICryptoLink(erc20_contract).transfer(
                     _msgSender(),
-                    matchId,
-                    goalA,
-                    goalB,
-                    penaltyResult,
-                    betAmount
+                    gameData[_msgSender()][matchId].betAmount - betAmount
                 );
-                return;
-            } else {
-                revert(ERROR_TRANSFER_TOKENS);
-            }
+            } //No hace falta este ELSE, porque solo hay que asignar los goles.
         }
-        return;
-    }
-
-    /**
-     * @dev clearBet/limpiar apuesta: elimina del array de apuestas una apuesta
-     * @param matchId ID del partido
-     * @return returnedBet cantidad de tokens que se devolvieron al usuario.
-     */
-    function clearBet(string calldata matchId)
-        public
-        returns (uint returnedBet)
-    {
-        //Debemos chequear que el Match no haya sido jugado.
-        require(
-            matches[matchId].status != MatchState.played,
-            ERROR_MATCH_PLAYED
+        gameData[_msgSender()][matchId].goalA = goalA;
+        gameData[_msgSender()][matchId].goalB = goalB;
+        gameData[_msgSender()][matchId].resultPenalty = penaltyResult;
+        gameData[_msgSender()][matchId].isValid = true;
+        emit BetCreated(
+            _msgSender(),
+            matchId,
+            goalA,
+            goalB,
+            penaltyResult,
+            betAmount
         );
-        //Debemos chequear que el Match esté en hora para apostarse.
-        require(
-            matches[matchId].matchDate >= block.timestamp - deadline,
-            ERROR_OUTATIME
-        );
-        //Debemos comprobar que HAYA una apuesta anterior.
-        require(
-            gameData[_msgSender()][matchId]._state == BetState.DEFINED,
-            "No hay apuesta que limpiar para este match."
-        );
-        //Debemos comprobar que no haya una apuesta anterior claimeada.
-        require(
-            gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
-            ERROR_ALREADY_CLAIMED
-        );
-
-        //Tengo que copiar el estado actual de la apuesta por si la transferencia falla
-        uint betAmount = gameData[_msgSender()][matchId].betAmount;
-        uint8 goalA = gameData[_msgSender()][matchId].goalA;
-        uint8 goalB = gameData[_msgSender()][matchId].goalB;
-        MatchPenalty penalties = gameData[_msgSender()][matchId].resultPenalty;
-        BetState betState = gameData[_msgSender()][matchId]._state;
-
-        //OJO, el MATCH tiene que ser "notplayed", así evitamos cambiar apuestas en partidos jugados.
-        //Si la apuesta está definida y el partido no fue jugado, lo dejamos limpiar.
-        if (
-            gameData[_msgSender()][matchId]._state == BetState.DEFINED &&
-            matches[matchId].status == MatchState.notplayed
-        ) {
-            //Hay apuesta y el partido no fue jugado, primero lo limpiamos.
-            gameData[_msgSender()][matchId].goalA = 0;
-            gameData[_msgSender()][matchId].goalB = 0;
-            gameData[_msgSender()][matchId].betAmount = 0;
-            gameData[_msgSender()][matchId].resultPenalty = MatchPenalty
-                .RESERVED;
-            gameData[_msgSender()][matchId]._state = BetState.NOT_DEFINED;
-            //Y luego le transferimos los tokens de vuelta al usuario.
-            if (
-                ICryptoLink(erc20_contract).transferFrom(
-                    address(this),
-                    _msgSender(),
-                    betAmount
-                )
-            ) {
-                //Si el retorno de tokens salió bien, volvemos e indicamos cuánto volvió.
-                emit BetCleared(_msgSender(), matchId, betAmount);
-                return betAmount;
-            } else {
-                //Hay apuesta y el partido no fue jugado, primero lo limpiamos.
-                gameData[_msgSender()][matchId].goalA = goalA;
-                gameData[_msgSender()][matchId].goalB = goalB;
-                gameData[_msgSender()][matchId].betAmount = betAmount;
-                gameData[_msgSender()][matchId].resultPenalty = penalties;
-                gameData[_msgSender()][matchId]._state = betState;
-                return 0;
-            }
-        }
-        return 0;
     }
 
     /**
@@ -347,99 +202,73 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         //Debemos chequear que el Match no haya sido jugado.
         require(
             matches[matchId].status == MatchState.played,
-            "El partido NO ha sido jugado."
+            ERROR_MATCH_NOT_PLAYED
         );
         //Debemos comprobar que no se haya claimeado.
         require(
-            gameData[_msgSender()][matchId]._state != BetState.CLAIMED,
-            "Este premio ha sido reclamado previamente."
+            !gameData[_msgSender()][matchId].claimed,
+            ERROR_ALREADY_CLAIMED
         );
         //Debemos comprobar que haya una apuesta anterior.
-        require(
-            gameData[_msgSender()][matchId]._state == BetState.DEFINED,
-            "No hay apuesta definida para este partido."
-        );
+        require(gameData[_msgSender()][matchId].isValid, ERROR_NOT_BET);
 
         /*** Cálculo de los premios ***/
-        uint256 erc20_prize_amount = gameData[_msgSender()][matchId].betAmount; //acá se va ir acumulando lo que corresponda
-        gameData[_msgSender()][matchId]._state = BetState.CLAIMED;
-        MatchResult resultBet = winnerResult(
-            gameData[_msgSender()][matchId].goalA,
-            gameData[_msgSender()][matchId].goalB
-        );
-        MatchResult resultMatch = winnerResult(
-            matches[matchId].goalA,
-            matches[matchId].goalB
-        );
+        uint8 matchGoalA = matches[matchId].goalA;
+        uint8 matchGoalB = matches[matchId].goalB;
+        uint8 betGoalA = gameData[_msgSender()][matchId].goalA;
+        uint8 betGoalB = gameData[_msgSender()][matchId].goalB;
+
+        uint256 erc20_prize_amount = 0; //acá se va ir acumulando lo que corresponda
+        gameData[_msgSender()][matchId].claimed = true;
+        MatchResult resultBet = winnerResult(betGoalA, betGoalB);
+        MatchResult resultMatch = winnerResult(matchGoalA, matchGoalB);
+
         if (matches[matchId].typeMatch == MatchType._Group) {
             //Estamos en fase de grupos, no se chequean penales.
-            if (
-                matches[matchId].goalA ==
-                gameData[_msgSender()][matchId].goalA &&
-                matches[matchId].goalB == gameData[_msgSender()][matchId].goalB
-            ) {
+            if (matchGoalA == betGoalA && matchGoalB == betGoalB) {
                 //Hizo un pleno: exact match, hay que mintear el NFT incluso
-                erc20_prize_amount =
-                    erc20_prize_amount *
-                    PRIZE_GROUP_EXACT_MATCH;
+                erc20_prize_amount = PRIZE_GROUP_EXACT_MATCH;
                 //Mintear NFT NFT NFT NFT
+                //Mintear los NFT de Seba
+                //NFTSeba(erc721_contract).mint(_msgSender(),matchId);
             } else {
                 if (
                     resultBet == resultMatch &&
-                    (matches[matchId].goalA ==
-                        gameData[_msgSender()][matchId].goalA ||
-                        matches[matchId].goalB ==
-                        gameData[_msgSender()][matchId].goalB)
+                    (matchGoalA == betGoalA || matchGoalB == betGoalB)
                 ) {
                     //Acertó alguno de los marcadores y el ganador
-                    erc20_prize_amount =
-                        erc20_prize_amount *
-                        PRIZE_GROUP_WINNER_ONE_SCORE;
+                    erc20_prize_amount = PRIZE_GROUP_WINNER_ONE_SCORE;
                 } else {
                     if (resultBet == resultMatch) {
                         //Acertó solo el ganador
-                        erc20_prize_amount =
-                            erc20_prize_amount *
-                            PRIZE_GROUP_WINNER_NOSCORE;
+                        erc20_prize_amount = PRIZE_GROUP_WINNER_NOSCORE;
                     } else {
-                        if (
-                            matches[matchId].goalA ==
-                            gameData[_msgSender()][matchId].goalA ||
-                            matches[matchId].goalB ==
-                            gameData[_msgSender()][matchId].goalB
-                        ) {
+                        if (matchGoalA == betGoalA || matchGoalB == betGoalB) {
                             //Acertó solo uno de los marcadores
-                            erc20_prize_amount =
-                                erc20_prize_amount *
-                                PRIZE_GROUP_ONE_SCORE;
+                            erc20_prize_amount = PRIZE_GROUP_ONE_SCORE;
                         }
                     }
                 }
             }
         } else {
             //Estamos en 8vos, 4tos, semi o final, solo se chequea quién gana y los penales
+            MatchPenalty betPenaltyResult = gameData[_msgSender()][matchId]
+                .resultPenalty;
+            MatchPenalty matchPenaltyResult = matches[matchId].resultPenalty;
             if (
                 resultBet == resultMatch &&
-                gameData[_msgSender()][matchId].resultPenalty ==
-                matches[matchId].resultPenalty
+                betPenaltyResult == matchPenaltyResult
             ) {
                 //Coincidió en todo, resultado y penales.
-                erc20_prize_amount = erc20_prize_amount * PRIZE_MATCH_PENALTIES;
+                erc20_prize_amount = PRIZE_MATCH_PENALTIES;
             } else {
                 if (resultBet == resultMatch) {
                     //solo el resultado pero no los penales
-                    erc20_prize_amount =
-                        erc20_prize_amount *
-                        PRIZE_MATCH_NO_PENALTIES;
+                    erc20_prize_amount = PRIZE_MATCH_NO_PENALTIES;
                 } else {
-                    if (
-                        gameData[_msgSender()][matchId].resultPenalty ==
-                        matches[matchId].resultPenalty
-                    ) {
+                    if (betPenaltyResult == matchPenaltyResult) {
                         //solo los penales
-                        erc20_prize_amount =
-                            erc20_prize_amount *
-                            PRIZE_ONLY_PENALTIES;
+                        erc20_prize_amount = PRIZE_ONLY_PENALTIES;
                     }
                 }
             }
@@ -448,9 +277,11 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         //TOKEN ERC20: Si es necesario mintearle tokens al usuario...
         //Si se usara DAI u otro Token, habría que cambiar la fórmula.
         //En este caso, el prode puede mintear.
-        ICryptoLink(erc20_contract).mint(_msgSender(), erc20_prize_amount);
-        //Mintear los NFT de Seba
-        //NFTSeba(erc721_contract).mint(_msgSender(),matchId);
+        ICryptoLink(erc20_contract).mint(
+            _msgSender(),
+            erc20_prize_amount * gameData[_msgSender()][matchId].betAmount
+        );
+
         return erc20_prize_amount;
     }
 
@@ -482,14 +313,12 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         uint256 _matchDate,
         string calldata _teamAID,
         string calldata _teamBID,
-        MatchType _matchType,
-        bool _betAllowed
+        MatchType _matchType
     ) public onlyRole(MATCH_ROLE) returns (Match memory match_data) {
         matches[_matchId].matchDate = _matchDate;
         matches[_matchId].status = MatchState.notplayed;
         //matches[_matchId].result = MatchResult.RESERVED;
         matches[_matchId].typeMatch = _matchType;
-        matches[_matchId].betAllowed = _betAllowed;
         matches[_matchId].teamAid = teams[_teamAID];
         matches[_matchId].teamBid = teams[_teamBID];
         return matches[_matchId];
@@ -500,12 +329,10 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         MatchState _matchState,
         uint8 _goalA,
         uint8 _goalB,
-        MatchPenalty _resultPenalty,
-        bool _betAllowed
+        MatchPenalty _resultPenalty
     ) public onlyRole(MATCH_ROLE) returns (Match memory match_data) {
         matches[_matchId].status = _matchState;
         matches[_matchId].resultPenalty = _resultPenalty;
-        matches[_matchId].betAllowed = _betAllowed;
         matches[_matchId].goalA = _goalA;
         matches[_matchId].goalB = _goalB;
         return matches[_matchId];

@@ -2,8 +2,8 @@
 pragma solidity ^0.8.4;
 
 /**
- * @title ERC20Token
- * @dev This contract manages the ERC20 token for the game.
+ * @title ICryptoLink
+ * @dev This interface manages the ERC20 token for the game.
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
 
@@ -22,4 +22,6 @@ interface ICryptoLink {
         address to,
         uint256 amount
     ) external returns (bool);
+
+    function transfer(address to, uint256 amount) external returns (bool);
 }
