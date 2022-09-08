@@ -14,8 +14,8 @@ contract Auction {
     uint8 public constant FOUNDER = 1;
     uint8 public constant ADMIN = 2;
     uint8 public constant USER = 3;
-    address public _allowlist;
 
+    address public _allowlist;
     address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //Cryptolink2 Address
 
     struct _Auction {
@@ -31,10 +31,9 @@ contract Auction {
     mapping (address => uint) public roles;
     
 
-    constructor( address allowlist ){
+    constructor(){
         //Aqui hay que asignar el owner del contrato
         roles[msg.sender] = FOUNDER;
-        _allowlist = allowlist;
         // console.log("Allowlist addr: ", _allowlist);
     }
 
@@ -57,6 +56,10 @@ contract Auction {
 
     function setERC20Contract( address _erc20_contract ) public onlyAdmins {
         erc20_contract = _erc20_contract;
+    }
+
+    function setAllowlistContract( address _allowlist_contract ) public onlyAdmins {
+        _allowlist = _allowlist_contract;
     }
 
     function giveRole(address _holder, uint _newRole)  public onlyAdmins {
@@ -154,9 +157,28 @@ contract Auction {
     function bidAuction( uint _bid, uint _auctionID) public onlyUsers{
         _Auction storage _auction = auctions[_auctionID];
 
-        require(_auction.auctionState == State.Started, "La subasta se encuentra cerrada");
-        require(msg.sender.balance >= _bid, "Fondos insuficientes");
-        require(_bid >= _auction.highestBid + _auction.step, "La puja debe ser mas alta");
+        //Verificamos que el usuario tenga suficnete saldo para apostar
+        require(
+            ICryptoLink(erc20_contract).balanceOf(msg.sender) >= _bid,
+            "El usuario no tiene suficiente saldo"
+
+        );
+
+        //Verificamos que la subasta tenga permisos para utilizar esos tokens
+        require(
+            ICryptoLink(erc20_contract).allowance(msg.sender, address(this)) >= _bid,
+            "La subasta no tiene permisos de gastar tus tokens."
+        );
+
+        // Verificamos que la subasta este abierta
+        require(
+            _auction.auctionState == State.Started, 
+            "La subasta se encuentra cerrada");
+        
+        // Verificamos que puja sea mayor al minimo permitido
+        require(
+            _bid >= _auction.highestBid + _auction.step, 
+            "La puja debe ser mas alta");
 
         //Verifica que no es la primer oferta
         if( _auction.highestBid > 0){

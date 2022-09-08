@@ -14,8 +14,9 @@ beforeEach(async () => {
     _Auction = await ethers.getContractFactory("Auction");
     _CryptoLink = await ethers.getContractFactory("CryptoLink");
     allowlist = await _Allowlist.deploy();
-    auction = await _Auction.deploy(allowlist.address);
+    auction = await _Auction.deploy();
     cryptolink = await _CryptoLink.deploy();
+    auction.setAllowlistContract(allowlist.address);
     auction.setERC20Contract(cryptolink.address);
 });
 
@@ -327,13 +328,13 @@ describe('Auction', () => {
             // Se realiza la puja
             await auction.connect(admin2).bidAuction(20, auctionId);
 
-            assert.faile;
-        } catch(error){
+            assert.fail;
+        } catch( error ){
             assert.ok;
         }
+
         const playerPosBalance = await cryptolink.balanceOf(admin2.address);
         // console.log("Balance Pos:" + playerPosBalance);
-
         expect(playerPreBalance-playerPosBalance).is.equal(0);
         const _auctions = await auction.getAuctions();
         expect(_auctions[auctionId].highestBidder).is.equal(admin1.address); 
@@ -372,8 +373,8 @@ describe('Auction', () => {
 
         try{
             // Puja del jugador 2
-            await cryptolink.connect(player2).approve(auction.address, 5);
-            await auction.connect(player2).bidAuction(5, auctionId);
+            await cryptolink.connect(player2).approve(auction.address, 25);
+            await auction.connect(player2).bidAuction(25, auctionId);
             assert.fail;
         } catch(error){
             assert.ok;
