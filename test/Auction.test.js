@@ -14,8 +14,9 @@ beforeEach(async () => {
     _Auction = await ethers.getContractFactory("Auction");
     _CryptoLink = await ethers.getContractFactory("CryptoLink");
     allowlist = await _Allowlist.deploy();
-    auction = await _Auction.deploy(allowlist.address);
+    auction = await _Auction.deploy();
     cryptolink = await _CryptoLink.deploy();
+    auction.setAllowlistContract(allowlist.address);
     auction.setERC20Contract(cryptolink.address);
 });
 

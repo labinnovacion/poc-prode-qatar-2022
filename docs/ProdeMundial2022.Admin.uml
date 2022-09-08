@@ -1,0 +1,18 @@
+@startuml
+skinparam sequenceMessageAlign center
+
+actor Admin
+== .      Allowlist \nCarga de jugadores ==
+
+Admin -> Allowlist : setUserStatus
+
+== .        Prode\nCarga de Partidos ==
+
+Admin -> Prode
+
+== NFT ==
+
+== .        Subasta\n Creacion de Subasta ==
+
+Admin -> Auction: CreateAuction
+@enduml
