@@ -2,9 +2,11 @@
 
 pragma solidity ^0.8.9;
 
+import "../Allowlist/IAllowlist.sol";
+
 // require('@openzeppelin/contracts/access/Ownable.sol');
 
-contract Allowlist{// is Ownable {
+//contract Allowlist{// is Ownable {
 
 //     mapping( address => bool) users;
 
@@ -15,7 +17,7 @@ contract Allowlist{// is Ownable {
 //     function getUserStatus(address user) public view returns(bool status){
 //         return users[user];
 //     }
- }
+//}
 
 contract Auction {
     enum State {Started, Closed, Ended, Canceled }

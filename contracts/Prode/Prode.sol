@@ -6,6 +6,7 @@ pragma solidity >=0.5.0 <0.9.0;
 // https://eips.ethereum.org/EIPS/eip-20
 // -----------------------------------------
 import "../ERC20Token/ICryptoLink.sol"; //Interface de CryptoLink
+import "../Allowlist/IAllowlist.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
@@ -33,7 +34,7 @@ contract Prode is Pausable, AccessControl {
     string public constant ERROR_MATCH_NOT_PLAYED = "Partido no jugado.";
     string public constant ERROR_ALREADY_CLAIMED = "Apuesta ya reclamada.";
     string public constant ERROR_OUTATIME =
-        "Fuera del hoario permitido para apostar.";
+        "Fuera del horario permitido para apostar.";
     string public constant ERROR_NOT_BET = "Partido sin apuesta.";
 
     /*** En fase de grupos: */
@@ -331,6 +332,12 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         uint8 _goalB,
         MatchPenalty _resultPenalty
     ) public onlyRole(MATCH_ROLE) returns (Match memory match_data) {
+        //FIXME: Agregar require de partido finalizado.
+                //Debemos chequear que el Match esté en hora para apostarse.
+        require(
+            matches[_matchId].matchDate < block.timestamp,
+            "Partido no comenzado."
+        );
         matches[_matchId].status = _matchState;
         matches[_matchId].resultPenalty = _resultPenalty;
         matches[_matchId].goalA = _goalA;

@@ -1,0 +1,1345 @@
+[{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64000b"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669024800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b5"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26ab"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64000e"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669057200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26bc"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bd"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Ahmad Bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64001a"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669316400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a3"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a8"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Lusail",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64001c"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669381200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a0"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b5"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640023"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669543200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26af"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bf"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Ahmad Bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64002a"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669662000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b6"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b2"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Lusail",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64002b"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669734000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ab"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a0"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64002c"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669734000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b1"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b5"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64002f"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669834800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b7"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26ac"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640038"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670007600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a8"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26aa"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640039"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669993200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ae"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b6"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64000c"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669035600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a9"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26ad"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64000d"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669046400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a0"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b1"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640010"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669122000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a2"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b8"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640014"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669208400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a1"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26af"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640015"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669219200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a7"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bf"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640016"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669230000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a5"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b3"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Ahmad Bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640017"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669284000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26aa"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26ba"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640018"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669294800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b2"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26ae"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64001b"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669370400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26bd"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26ad"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Ahmad Bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64001f"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669456800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b8"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26be"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640022"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669489200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ac"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bb"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Lusail",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640026"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669575600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a7"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a1"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640027"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669629600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ba"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a8"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640029"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669651200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a3"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26aa"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64002e"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669748400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ad"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bc"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640033"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669921200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26af"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a7"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640036"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669906800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b3"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b9"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64003a"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669993200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b4"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b2"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64000f"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669111200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ac"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b0"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Lusail",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640011"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669132800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26bb"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b7"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640013"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669197600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b9"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a6"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640019"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669305600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b6"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b4"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64001d"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669392000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ab"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b1"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64001e"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669402800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a9"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bc"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640020"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669467600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b7"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b0"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640021"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669478400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a4"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a2"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640025"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669564800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a6"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b3"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640028"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669640400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ae"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b4"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc64002d"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669748400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26bd"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a9"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Ahmad Bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640012"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669143600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a4"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26be"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640024"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669554000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a5"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26b9"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640030"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669834800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b0"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26bb"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Lusail",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640031"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669820400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26b8"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a4"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640032"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669820400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26be"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a2"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640034"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669921200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26bf"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a1"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640035"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1669906800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26a6"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a5"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Ahmad Bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec549bfca97afc640037"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670007600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": {
+      "$oid": "62d73d39baf01be1797e26ba"
+    },
+    "teamB": {
+      "$oid": "62d73d39baf01be1797e26a3"
+    },
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Group",
+    "stadium": "Lusail",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf9"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670338800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf5"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670166000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf3"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670079600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf7"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670252400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Al Janoub",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf8"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670266800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Stadium 974",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf4"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670094000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Ahmed bin Ali",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcf6"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670180400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ec8aec6ccf1587c6fcfa"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670353200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "8VO",
+    "stadium": "Lusail Iconic",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecbd3439d19a11780015"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670698800000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "4TO",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecbd3439d19a11780014"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670684400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "4TO",
+    "stadium": "Al Thumama",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecbd3439d19a11780012"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670598000000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "4TO",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecbd3439d19a11780013"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670612400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "4TO",
+    "stadium": "Lusail Iconic",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecccd807e0d064a4c0e7"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1670943600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Semifinal",
+    "stadium": "Education City",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecccd807e0d064a4c0e8"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1671044400000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Semifinal",
+    "stadium": "Al Bayt",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecd4a01349508aacdef3"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1671289200000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Final",
+    "stadium": "Khalifa International",
+    "resultPenalty": 0
+  },{
+    "_id": {
+      "$oid": "62e9ecd4a01349508aacdef4"
+    },
+    "matchDate": {
+      "$date": {
+        "$numberLong": "1671375600000"
+      }
+    },
+    "status": "notplayed",
+    "result": 0,
+    "teamA": null,
+    "teamB": null,
+    "goalA": 0,
+    "goalB": 0,
+    "typeMatch": "Final",
+    "stadium": "Lusail Iconic",
+    "resultPenalty": 0
+  }]

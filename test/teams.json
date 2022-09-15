@@ -1,0 +1,449 @@
+[{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a0"
+    },
+    "name": "Qatar",
+    "name_short": "QAT",
+    "flag": null,
+    "shield": "qat.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081516"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a1"
+    },
+    "name": "Alemania",
+    "name_short": "DEU",
+    "flag": null,
+    "shield": "deu.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081518"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a2"
+    },
+    "name": "Dinamarca",
+    "name_short": "DNK",
+    "flag": null,
+    "shield": "dnk.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081518"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a3"
+    },
+    "name": "Brasil",
+    "name_short": "BRA",
+    "flag": null,
+    "shield": "bra.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081518"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a4"
+    },
+    "name": "Francia",
+    "name_short": "FRA",
+    "flag": null,
+    "shield": "fra.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081519"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a5"
+    },
+    "name": "Bélgica",
+    "name_short": "BEL",
+    "flag": null,
+    "shield": "bel.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081519"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a6"
+    },
+    "name": "Croacia",
+    "name_short": "CRO",
+    "flag": null,
+    "shield": "cro.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081519"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a7"
+    },
+    "name": "España",
+    "name_short": "ESP",
+    "flag": null,
+    "shield": "esp.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081519"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a8"
+    },
+    "name": "Serbia",
+    "name_short": "SRB",
+    "flag": null,
+    "shield": "srb.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081520"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26a9"
+    },
+    "name": "Inglaterra",
+    "name_short": "GBR",
+    "flag": null,
+    "shield": "grb.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081520"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26aa"
+    },
+    "name": "Suiza",
+    "name_short": "CHE",
+    "flag": null,
+    "shield": "che.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081520"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26ab"
+    },
+    "name": "Países Bajos",
+    "name_short": "NLD",
+    "flag": null,
+    "shield": "nld.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081521"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26ac"
+    },
+    "name": "Argentina",
+    "name_short": "ARG",
+    "flag": null,
+    "shield": "arg.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081521"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26ad"
+    },
+    "name": "Irán",
+    "name_short": "IRN",
+    "flag": null,
+    "shield": "irn.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081521"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26ae"
+    },
+    "name": "Corea del Sur",
+    "name_short": "KOR",
+    "flag": null,
+    "shield": "kor.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081521"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26af"
+    },
+    "name": "Japón",
+    "name_short": "JPN",
+    "flag": null,
+    "shield": "jpn.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081521"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b0"
+    },
+    "name": "Arabia Saudita",
+    "name_short": "SAU",
+    "flag": null,
+    "shield": "sau.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081522"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b1"
+    },
+    "name": "Ecuador",
+    "name_short": "ECU",
+    "flag": null,
+    "shield": "ecu.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081522"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b2"
+    },
+    "name": "Uruguay",
+    "name_short": "URU",
+    "flag": null,
+    "shield": "uru.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081522"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b3"
+    },
+    "name": "Canadá",
+    "name_short": "CAN",
+    "flag": null,
+    "shield": "can.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081522"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b4"
+    },
+    "name": "Ghana",
+    "name_short": "GHA",
+    "flag": null,
+    "shield": "gha.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081522"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b5"
+    },
+    "name": "Senegal",
+    "name_short": "SEN",
+    "flag": null,
+    "shield": "sen.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081523"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b6"
+    },
+    "name": "Portugal",
+    "name_short": "PRT",
+    "flag": null,
+    "shield": "prt.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081523"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b7"
+    },
+    "name": "Polonia",
+    "name_short": "POL",
+    "flag": null,
+    "shield": "pol.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081523"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b8"
+    },
+    "name": "Túnez",
+    "name_short": "TUN",
+    "flag": null,
+    "shield": "tun.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081523"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26b9"
+    },
+    "name": "Marruecos",
+    "name_short": "mar",
+    "flag": null,
+    "shield": "mar.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081523"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26ba"
+    },
+    "name": "Camerún",
+    "name_short": "CMR",
+    "flag": null,
+    "shield": "cmr.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081524"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26bb"
+    },
+    "name": "México",
+    "name_short": "MEX",
+    "flag": null,
+    "shield": "mex.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081524"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26bc"
+    },
+    "name": "Estados Unidos",
+    "name_short": "USA",
+    "flag": null,
+    "shield": "usa.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081524"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26bd"
+    },
+    "name": "Gales",
+    "name_short": "WAL",
+    "flag": null,
+    "shield": "wal.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081524"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26be"
+    },
+    "name": "Australia",
+    "name_short": "AUS",
+    "flag": null,
+    "shield": "aus.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081525"
+      }
+    }
+  },{
+    "_id": {
+      "$oid": "62d73d39baf01be1797e26bf"
+    },
+    "name": "Costa Rica",
+    "name_short": "CRC",
+    "flag": null,
+    "shield": "crc.png",
+    "status": 1,
+    "date": {
+      "$date": {
+        "$numberLong": "1658273081525"
+      }
+    }
+  }]
