@@ -1,0 +1,36 @@
+@startuml
+
+
+actor Player
+
+== Apuesta \nCambio \nCancelacion ==
+
+Player -> Frontend : Bet(match, result, bet )
+Frontend -> Prode : Bet( #address, match, result, bet)
+Prode --> Frontend : result
+Frontend -->Player : Bet Done
+
+== Resultado ==
+
+Frontend -> BackendAWS : UpdateMatch(match, result)
+BackendAWS -> Prode : updateMatch( match, result)
+
+== Claim ==
+
+Player -> Frontend : Claim(...)
+Frontend -> Prode: claim(#address)
+Prode -> NFT: mint(#address, matchId)
+NFT --> Frontend: result(#TokenId, ... ) 
+
+== Query NFT ==
+Frontend -> NFT: balance(#Address)
+Frontend -> NFT: tokenUri(#tokenId)
+NFT-->Frontend: result(tokenUrl)
+
+== SUBASTA ==
+Player -> Frontend: bid(subasta, monto)
+Frontend -> Auction: bid(#address, auctionId, bid)
+Auction --> Frontend: Result
+
+
+@enduml

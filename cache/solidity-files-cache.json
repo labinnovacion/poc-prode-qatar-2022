@@ -9,8 +9,8 @@
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -39,15 +39,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1661363280423,
+      "lastModificationDate": 1662392711657,
       "contentHash": "e436cea06129be2c73cda4b1acc848b5",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -76,15 +76,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1661363280353,
+      "lastModificationDate": 1662392711597,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -111,15 +111,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/access/AccessControl.sol": {
-      "lastModificationDate": 1661363280343,
+      "lastModificationDate": 1662392711587,
       "contentHash": "e6ef731d275b1e7b2995f00fa56d9dab",
       "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -151,15 +151,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/access/IAccessControl.sol": {
-      "lastModificationDate": 1661363280393,
+      "lastModificationDate": 1662392711637,
       "contentHash": "57c84298234411cea19c7c284d86be8b",
       "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -186,15 +186,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1661363280433,
+      "lastModificationDate": 1662392711667,
       "contentHash": "cf46906c4035f51639a22265066a9e78",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -221,15 +221,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1661363280373,
+      "lastModificationDate": 1662392711607,
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -258,15 +258,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1661363280403,
+      "lastModificationDate": 1662392711637,
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -293,15 +293,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/ERC20Token/ERC20Token.sol": {
-      "lastModificationDate": 1661366413203,
+      "lastModificationDate": 1662386252447,
       "contentHash": "3626d499180770f571b8dadff43c7837",
       "sourceName": "contracts/ERC20Token/ERC20Token.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -332,15 +332,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1661363280373,
+      "lastModificationDate": 1662392711617,
       "contentHash": "af7bd64e1cfefbf6cb07f2adc1a25392",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -371,15 +371,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1661363280423,
+      "lastModificationDate": 1662392711657,
       "contentHash": "25c8108f36fdd472bc78d4c4af240c11",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -408,15 +408,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1661363280403,
+      "lastModificationDate": 1662392711647,
       "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -443,15 +443,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1661363280403,
+      "lastModificationDate": 1662392711647,
       "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -480,15 +480,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/auction/auction.sol": {
-      "lastModificationDate": 1662667973129,
+      "lastModificationDate": 1662672153599,
       "contentHash": "d2b9d44c2855bd35917c6cb8d3d06c33",
       "sourceName": "contracts/auction/auction.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -526,8 +526,8 @@
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {
@@ -554,15 +554,15 @@
       ]
     },
     "/home/suyamaed/laboratorio/poc-prode-qatar-2022/contracts/ERC20Token/IERC20Token.sol": {
-      "lastModificationDate": 1662383404077,
+      "lastModificationDate": 1662391493857,
       "contentHash": "3ba637ff598e712da2bebbbf75356e74",
       "sourceName": "contracts/ERC20Token/IERC20Token.sol",
       "solcConfig": {
         "version": "0.8.16",
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
+            "enabled": true,
+            "runs": 1000
           },
           "outputSelection": {
             "*": {

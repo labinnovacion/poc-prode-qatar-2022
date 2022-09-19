@@ -1,6 +1,8 @@
 //script/deploy.js
 //How to: npx hardhat run scripts/deploy.js --network <network-name>
 
+
+
 async function main() {
     const [deployer] = await ethers.getSigners();
 
@@ -12,12 +14,11 @@ async function main() {
     const Auction = await ethers.getContractFactory("Auction");
     const auction = await Auction.deploy();
 
-    console.log("Token address:", token.address);
+    console.log("Auction address:", auction.address);
   }
 
  
-
-  main()
+ main()
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);

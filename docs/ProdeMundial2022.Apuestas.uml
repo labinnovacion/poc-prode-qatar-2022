@@ -1,0 +1,23 @@
+@startuml
+
+title "Proceso de Apuesta - Sequence Diagram"
+
+actor Player
+'boundary Proxy
+
+== Approve ==
+Player -> Frontend: Login
+Frontend -> Cryptolink: Approve 
+Cryptolink --> Frontend: Result
+
+== Bet ==
+Player -> Frontend: Bet
+Frontend -> Prode:Bet
+Prode --> Frontend: Result
+
+== Claim ==
+Player -> Frontend: Claim
+Frontend -> Prode: Claim
+Prode --> Frontend: Result
+
+@enduml
