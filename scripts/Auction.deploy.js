@@ -1,5 +1,5 @@
 //script/deploy.js
-//How to: npx hardhat run scripts/deploy.js --network <network-name>
+//How to: npx hardhat run scripts/Auction.deploy.js --network <network-name>
 
 
 
