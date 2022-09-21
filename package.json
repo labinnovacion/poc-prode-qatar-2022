@@ -21,6 +21,8 @@
   "homepage": "https://github.com/labinnovacion/poc-prode-qatar-2022#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@nomiclabs/hardhat-solhint": "^2.0.1",
+    "dotenv": "^16.0.1",
     "hardhat": "^2.10.2",
     "hardhat-contract-sizer": "^2.6.1"
   },

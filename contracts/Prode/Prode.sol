@@ -13,21 +13,16 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./DataTypesDeclaration.sol";
 import "hardhat/console.sol";
 
-
 contract Prode is Pausable, AccessControl {
     /***    Roles   ***/
-    //El Admin 8-)
-    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     //Tiene permisos para modificar partidos
     bytes32 public constant MATCH_ROLE = keccak256("MATCH_ROLE");
 
-    //Son los que pueden jugar
-    bytes32 public constant PLAYER_ROLE = keccak256("PLAYER_ROLE");
-
     /***    Constantes  ***/
     address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //TOKEN Cryptolink2 Address
     address public erc721_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //SebaNFT Address
+    address public allowlist_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //AllowList contract
     uint deadline = 1 hours;
 
     string public constant ERROR_MATCH_PLAYED = "Partido ya jugado.";
@@ -68,6 +63,12 @@ contract Prode is Pausable, AccessControl {
         address indexed newContract,
         address indexed oldContract
     );
+
+    event AllowlistContractSet(
+        address indexed newContract,
+        address indexed oldContract
+    );
+
     event BetCreated(
         address indexed player,
         string matchID,
@@ -81,12 +82,11 @@ contract Prode is Pausable, AccessControl {
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
         _grantRole(MATCH_ROLE, _msgSender());
-        _grantRole(ADMIN_ROLE, _msgSender());
     }
 
     function setERC20Contract(address _erc20_contract)
         public
-        onlyRole(ADMIN_ROLE)
+        onlyRole(DEFAULT_ADMIN_ROLE)
     {
         emit ProdeERC20ContractSet(_erc20_contract, erc20_contract);
         erc20_contract = _erc20_contract;
@@ -94,21 +94,29 @@ contract Prode is Pausable, AccessControl {
 
     function setERC721Contract(address _erc721_contract)
         public
-        onlyRole(ADMIN_ROLE)
+        onlyRole(DEFAULT_ADMIN_ROLE)
     {
         emit ProdeERC721ContractSet(_erc721_contract, erc721_contract);
         erc20_contract = _erc721_contract;
     }
 
-    function setDeadline(uint time) public onlyRole(ADMIN_ROLE) {
+    function setAllowlistContract(address _allowlist_contract)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        emit AllowlistContractSet(_allowlist_contract, allowlist_contract);
+        allowlist_contract = _allowlist_contract;
+    }
+
+    function setDeadline(uint time) public onlyRole(DEFAULT_ADMIN_ROLE) {
         deadline = time;
     }
 
-    function pause() public onlyRole(ADMIN_ROLE) {
+    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyRole(ADMIN_ROLE) {
+    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
         _unpause();
     }
 
@@ -127,7 +135,7 @@ contract Prode is Pausable, AccessControl {
         uint8 goalA,
         uint8 goalB,
         uint betAmount
-    ) public {
+    ) public checkForPlayer {
         //Debemos chequear que el Match no haya sido jugado.
         require(
             matches[matchId].status != MatchState.played,
@@ -194,11 +202,12 @@ b) De no acertar el resultado exacto y solo acertar el ganador de los penales se
 c) De no acertar el resultado del partido y no acertar el ganador por penales no se obtendrán puntos.
 
      * @param matchId ID del partido.
-     * @return prizeAmount Valor del premio.
+     * @return erc20_prize_amount Valor del premio.
+     * @return mintNft Si hubo NFT Minteado, el ID, sino devuelve 0.
      */
     function claimPrize(string calldata matchId)
-        public
-        returns (uint prizeAmount)
+        public checkForPlayer
+        returns (uint erc20_prize_amount, bool mintNft)
     {
         //Debemos chequear que el Match no haya sido jugado.
         require(
@@ -213,14 +222,43 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         //Debemos comprobar que haya una apuesta anterior.
         require(gameData[_msgSender()][matchId].isValid, ERROR_NOT_BET);
 
+
+        gameData[_msgSender()][matchId].claimed = true;
+
+        /*** Cálculo de los premios ***/
+        mintNft = false;
+        (erc20_prize_amount, mintNft ) = checkPrize(_msgSender(),matchId);
+
+        //TOKEN ERC20: Si es necesario mintearle tokens al usuario...
+        //Si se usara DAI u otro Token, habría que cambiar la fórmula.
+        //En este caso, el prode puede mintear.
+        ICryptoLink(erc20_contract).mint(
+            _msgSender(),
+            erc20_prize_amount * gameData[_msgSender()][matchId].betAmount
+        );
+
+        if( mintNft) {//Tenemos que mintear el NFT
+            // ACá se mintearía el NFT de Seba
+            //INFT(erc721_contract).mint(_msgSender(),matchId);
+        }
+
+        return (erc20_prize_amount,mintNft);
+    }
+
+    function checkPrize(address player, string calldata matchId)
+        public 
+        view
+        returns (uint erc20_prize_amount, bool mintNFT)
+    {
+        mintNFT = false;    //por default, nadie ganó nada aún
+        erc20_prize_amount = 0; //acá se va ir acumulando lo que corresponda
+
         /*** Cálculo de los premios ***/
         uint8 matchGoalA = matches[matchId].goalA;
         uint8 matchGoalB = matches[matchId].goalB;
-        uint8 betGoalA = gameData[_msgSender()][matchId].goalA;
-        uint8 betGoalB = gameData[_msgSender()][matchId].goalB;
+        uint8 betGoalA = gameData[player][matchId].goalA;
+        uint8 betGoalB = gameData[player][matchId].goalB;
 
-        uint256 erc20_prize_amount = 0; //acá se va ir acumulando lo que corresponda
-        gameData[_msgSender()][matchId].claimed = true;
         MatchResult resultBet = winnerResult(betGoalA, betGoalB);
         MatchResult resultMatch = winnerResult(matchGoalA, matchGoalB);
 
@@ -229,9 +267,8 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
             if (matchGoalA == betGoalA && matchGoalB == betGoalB) {
                 //Hizo un pleno: exact match, hay que mintear el NFT incluso
                 erc20_prize_amount = PRIZE_GROUP_EXACT_MATCH;
-                //Mintear NFT NFT NFT NFT
                 //Mintear los NFT de Seba
-                //NFTSeba(erc721_contract).mint(_msgSender(),matchId);
+                mintNFT = true;
             } else {
                 if (
                     resultBet == resultMatch &&
@@ -253,7 +290,7 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
             }
         } else {
             //Estamos en 8vos, 4tos, semi o final, solo se chequea quién gana y los penales
-            MatchPenalty betPenaltyResult = gameData[_msgSender()][matchId]
+            MatchPenalty betPenaltyResult = gameData[player][matchId]
                 .resultPenalty;
             MatchPenalty matchPenaltyResult = matches[matchId].resultPenalty;
             if (
@@ -262,6 +299,7 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
             ) {
                 //Coincidió en todo, resultado y penales.
                 erc20_prize_amount = PRIZE_MATCH_PENALTIES;
+                mintNFT = true;
             } else {
                 if (resultBet == resultMatch) {
                     //solo el resultado pero no los penales
@@ -274,16 +312,7 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
                 }
             }
         }
-
-        //TOKEN ERC20: Si es necesario mintearle tokens al usuario...
-        //Si se usara DAI u otro Token, habría que cambiar la fórmula.
-        //En este caso, el prode puede mintear.
-        ICryptoLink(erc20_contract).mint(
-            _msgSender(),
-            erc20_prize_amount * gameData[_msgSender()][matchId].betAmount
-        );
-
-        return erc20_prize_amount;
+        return (erc20_prize_amount, mintNFT);
     }
 
     function winnerResult(uint8 goalA, uint8 goalB)
@@ -333,7 +362,7 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         MatchPenalty _resultPenalty
     ) public onlyRole(MATCH_ROLE) returns (Match memory match_data) {
         //FIXME: Agregar require de partido finalizado.
-                //Debemos chequear que el Match esté en hora para apostarse.
+        //Debemos chequear que el Match esté en hora para apostarse.
         require(
             matches[_matchId].matchDate < block.timestamp,
             "Partido no comenzado."
@@ -343,5 +372,10 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         matches[_matchId].goalA = _goalA;
         matches[_matchId].goalB = _goalB;
         return matches[_matchId];
+    }
+
+    modifier checkForPlayer(){
+        require(IAllowlist(allowlist_contract).getUserStatus(_msgSender()) || hasRole(DEFAULT_ADMIN_ROLE,_msgSender()),"No autorizado.");
+        _;
     }
 }
