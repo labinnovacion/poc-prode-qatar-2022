@@ -378,34 +378,36 @@ describe("PRODE QATAR 2022", () => {
             //5.a: Iterar para cada partido:
             let betArray = [
                 { goalA: 0, goalB: 0, penalties: 1 },
-                { goalA: 0, goalB: 1, penalties: 0 },      
+                { goalA: 0, goalB: 1, penalties: 0 },
                 { goalA: 2, goalB: 0, penalties: 0 },
                 { goalA: 2, goalB: 2, penalties: 2 },
-                { goalA: 3, goalB: 1, penalties: 0 }, 
-                { goalA: 3, goalB: 1, penalties: 1 },
-                { goalA: 3, goalB: 1, penalties: 2 },
+                { goalA: 3, goalB: 1, penalties: 0 },
+                { goalA: 3, goalB: 1, penalties: 1 },   //Este está bugueado para ver qué interpreta el contrato.
+                { goalA: 3, goalB: 1, penalties: 2 },   //Este está bugueado para ver qué interpreta el contrato.
                 { goalA: 2, goalB: 1, penalties: 0 }]
 
             for (const [matchIdx, matchVal] of matchesList.slice(Math.max(matchesList.length - 16, 0)).entries()) { //solo los últimos partidos
                 await ProdeContract.connect(val).bet2(matchVal.id,
-                    betArray[matchIdx%(betArray.length)].penalties,
-                    betArray[matchIdx%(betArray.length)].goalA,
-                    betArray[matchIdx%(betArray.length)].goalB,
+                    betArray[matchIdx % (betArray.length)].penalties,
+                    betArray[matchIdx % (betArray.length)].goalA,
+                    betArray[matchIdx % (betArray.length)].goalB,
                     BET_BASE);
-                expect((await ProdeContract.gameData(val.address, matchVal.id)).goalA).to.equal(betArray[matchIdx%(betArray.length)].goalA);
-                expect((await ProdeContract.gameData(val.address, matchVal.id)).goalB).to.equal(betArray[matchIdx%(betArray.length)].goalB);
-                expect((await ProdeContract.gameData(val.address, matchVal.id)).resultPenalty).to.equal(betArray[matchIdx%(betArray.length)].penalties);
+                expect((await ProdeContract.gameData(val.address, matchVal.id)).goalA).to.equal(betArray[matchIdx % (betArray.length)].goalA);
+                expect((await ProdeContract.gameData(val.address, matchVal.id)).goalB).to.equal(betArray[matchIdx % (betArray.length)].goalB);
+                expect((await ProdeContract.gameData(val.address, matchVal.id)).resultPenalty).to.equal(betArray[matchIdx % (betArray.length)].penalties);
 
             }
 
             //6: Actualizar matches con resultados:
             let resultMatchArray = [
-                { goalA: 0, goalB: 0,penalties: 2, prize: PRIZE_GROUP_ONE_SCORE },       //Empate, no acierta resultado pero acierta uno de los marcadores
-                { goalA: 0, goalB: 1,penalties: 0, prize: 0 },                           //No acierta nada
-                { goalA: 2, goalB: 0,penalties: 0, prize: PRIZE_GROUP_EXACT_MATCH },     //Acierto exacto
-                { goalA: 2, goalB: 2,penalties: 2, prize: PRIZE_GROUP_ONE_SCORE },       //Empate, no acierta resultado pero acierta otro de los marcadores
-                { goalA: 3, goalB: 1,penalties: 0, prize: PRIZE_GROUP_WINNER_NOSCORE },  //Acierta resultado pero ningún marcador
-                { goalA: 2, goalB: 1,penalties: 0, prize: PRIZE_GROUP_WINNER_ONE_SCORE }]//Acierta resultado y uno de los marcadores 
+                { goalA: 0, goalB: 0, penalties: 2, prize: PRIZE_MATCH_NO_PENALTIES },      //Acierta el partido pero no los penales.
+                { goalA: 0, goalB: 1, penalties: 0, prize: PRIZE_MATCH_NO_PENALTIES },      //Acierto exacto (no hubo penales)
+                { goalA: 2, goalB: 0, penalties: 0, prize: PRIZE_MATCH_NO_PENALTIES },      //Acierto exacto (no hubo penales)
+                { goalA: 2, goalB: 2, penalties: 2, prize: PRIZE_MATCH_PENALTIES },         //Acierto exacto CON PENALES
+                { goalA: 3, goalB: 1, penalties: 0, prize: PRIZE_MATCH_NO_PENALTIES },      //Acierto exacto (no hubo penales)
+                { goalA: 3, goalB: 1, penalties: 0, prize: PRIZE_MATCH_NO_PENALTIES },      //Acierto exacto (no hubo penales)
+                { goalA: 3, goalB: 1, penalties: 0, prize: PRIZE_MATCH_NO_PENALTIES },      //Acierto exacto (no hubo penales)
+                { goalA: 1, goalB: 2, penalties: 0, prize: 0 }]                             //No acierta nada
             let minTimestamp = 0;
             for (const [matchIdx, matchVal] of matchesList.slice(Math.max(matchesList.length - 16, 0)).entries()) {
                 // getting timestamp
@@ -416,9 +418,9 @@ describe("PRODE QATAR 2022", () => {
                 await network.provider.send("evm_setNextBlockTimestamp", [minTimestamp])
                 await network.provider.send("evm_mine") // this one will have 2021-07-01 12:00 AM as its timestamp, no matter what the previous block has
 
-                let goalA = resultMatchArray[matchIdx].goalA;
-                let goalB = resultMatchArray[matchIdx].goalB;
-                let penalties = 1; //Inventa resultado, claim debería chequear que no le de bola en fase de grupos
+                let goalA = resultMatchArray[matchIdx % (resultMatchArray.length)].goalA;
+                let goalB = resultMatchArray[matchIdx % (resultMatchArray.length)].goalB;
+                let penalties = resultMatchArray[matchIdx % (resultMatchArray.length)].penalties; //Debería chequear que los premios se den a pesar de poner valores inválidos
                 await ProdeContract.setMatchResult(matchVal.id, 1, goalA, goalB, penalties);
             }
             //7: Vamos a claimear, siempre que podamos!
@@ -430,7 +432,7 @@ describe("PRODE QATAR 2022", () => {
                     //.to.changeTokenBalance(cryptoLinkToken, val.address, BET_BASE * resultMatchArray[matchIdx].prize);
                     .withArgs(ethers.constants.AddressZero,
                         val.address,
-                        parseInt(BET_BASE * resultMatchArray[matchIdx].prize))
+                        parseInt(BET_BASE * resultMatchArray[matchIdx % (resultMatchArray.length)].prize))
             }
             //8: Probamos claimear de vuelta:
             //7.a: Iterar para cada partido:
@@ -441,4 +443,54 @@ describe("PRODE QATAR 2022", () => {
 
 
     });
+    describe("Prode contract - Change Bet", function () {
+        it("Give tokens to users to bet... and change their bets, to check if the mathematics are correct.", async function () {
+
+            var val = signers[1];
+
+            //Transfer ERC20 to players to "play"
+            //1: Le doy tokens
+            await cryptoLinkToken.mint(val.address, CRYPTOLINK_TOKENS);
+
+            //2: Ver si tiene saldo
+            expect(await cryptoLinkToken.balanceOf(val.address)).to.equal(CRYPTOLINK_TOKENS);
+
+            //3: Aprobar el gasto
+            await cryptoLinkToken.connect(val).approve(ProdeContract.address, CRYPTOLINK_TOKENS);
+
+            //4: Ver si tiene el Allowance
+            expect(await cryptoLinkToken.connect(val).allowance(val.address, ProdeContract.address)).to.equal(CRYPTOLINK_TOKENS);
+
+            //5: Apostar
+            await ProdeContract.connect(val).bet2("62e9ec549bfca97afc64000b",
+                0,
+                0,
+                0,
+                BET_BASE);
+            expect((await ProdeContract.gameData(val.address, "62e9ec549bfca97afc64000b")).betAmount).to.equal(BET_BASE);
+            
+            //Cambiar la apuesta, devolveme 1000 amigo.
+            expect(await ProdeContract.connect(val).bet2("62e9ec549bfca97afc64000b",
+                0,
+                0,
+                0,
+                BET_BASE - 1000)).to.emit(cryptoLinkToken, 'Transfer')
+                .to.changeTokenBalance(cryptoLinkToken, val.address, 1000);
+            //.withArgs(ethers.constants.AddressZero,
+            //    val.address,
+            //    parseInt(BET_BASE * resultMatchArray[matchIdx % (resultMatchArray.length)].prize))
+            expect((await ProdeContract.gameData(val.address, "62e9ec549bfca97afc64000b")).betAmount).to.equal(BET_BASE - 1000);
+
+            //Ahora cambio la apuesta, sumo 2000
+            expect(await ProdeContract.connect(val).bet2("62e9ec549bfca97afc64000b",
+                0,
+                0,
+                0,
+                BET_BASE + 2000)).to.emit(cryptoLinkToken, 'Transfer')
+                .to.changeTokenBalance(cryptoLinkToken, val.address, 0);
+            expect((await ProdeContract.gameData(val.address, "62e9ec549bfca97afc64000b")).betAmount).to.equal(BET_BASE +2000);
+
+        });
+    });
+
 })

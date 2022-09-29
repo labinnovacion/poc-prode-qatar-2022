@@ -22,7 +22,8 @@ contract Prode is Pausable, AccessControl {
     /***    Constantes  ***/
     address public erc20_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //TOKEN Cryptolink2 Address
     address public erc721_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //SebaNFT Address
-    address public allowlist_contract = 0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //AllowList contract
+    address public allowlist_contract =
+        0xbf6c50889d3a620eb42C0F188b65aDe90De958c4; //AllowList contract
     uint deadline = 1 hours;
 
     string public constant ERROR_MATCH_PLAYED = "Partido ya jugado.";
@@ -147,6 +148,7 @@ contract Prode is Pausable, AccessControl {
             ERROR_OUTATIME
         );
 
+
         //Lógica de la apuesta
 
         if (gameData[_msgSender()][matchId].betAmount < betAmount) {
@@ -206,7 +208,8 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
      * @return mintNft Si hubo NFT Minteado, el ID, sino devuelve 0.
      */
     function claimPrize(string calldata matchId)
-        public checkForPlayer
+        public
+        checkForPlayer
         returns (uint erc20_prize_amount, bool mintNft)
     {
         //Debemos chequear que el Match no haya sido jugado.
@@ -222,12 +225,11 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         //Debemos comprobar que haya una apuesta anterior.
         require(gameData[_msgSender()][matchId].isValid, ERROR_NOT_BET);
 
-
         gameData[_msgSender()][matchId].claimed = true;
 
         /*** Cálculo de los premios ***/
         mintNft = false;
-        (erc20_prize_amount, mintNft ) = checkPrize(_msgSender(),matchId);
+        (erc20_prize_amount, mintNft) = checkPrize(_msgSender(), matchId);
 
         //TOKEN ERC20: Si es necesario mintearle tokens al usuario...
         //Si se usara DAI u otro Token, habría que cambiar la fórmula.
@@ -237,20 +239,21 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
             erc20_prize_amount * gameData[_msgSender()][matchId].betAmount
         );
 
-        if( mintNft) {//Tenemos que mintear el NFT
+        if (mintNft) {
+            //Tenemos que mintear el NFT
             // ACá se mintearía el NFT de Seba
             //INFT(erc721_contract).mint(_msgSender(),matchId);
         }
 
-        return (erc20_prize_amount,mintNft);
+        return (erc20_prize_amount, mintNft);
     }
 
     function checkPrize(address player, string calldata matchId)
-        public 
+        public
         view
         returns (uint erc20_prize_amount, bool mintNFT)
     {
-        mintNFT = false;    //por default, nadie ganó nada aún
+        mintNFT = false; //por default, nadie ganó nada aún
         erc20_prize_amount = 0; //acá se va ir acumulando lo que corresponda
 
         /*** Cálculo de los premios ***/
@@ -293,22 +296,19 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
             MatchPenalty betPenaltyResult = gameData[player][matchId]
                 .resultPenalty;
             MatchPenalty matchPenaltyResult = matches[matchId].resultPenalty;
-            if (
-                resultBet == resultMatch &&
-                betPenaltyResult == matchPenaltyResult
-            ) {
-                //Coincidió en todo, resultado y penales.
-                erc20_prize_amount = PRIZE_MATCH_PENALTIES;
-                mintNFT = true;
-            } else {
-                if (resultBet == resultMatch) {
-                    //solo el resultado pero no los penales
-                    erc20_prize_amount = PRIZE_MATCH_NO_PENALTIES;
-                } else {
-                    if (betPenaltyResult == matchPenaltyResult) {
-                        //solo los penales
-                        erc20_prize_amount = PRIZE_ONLY_PENALTIES;
+            //FIXME: Hay que arreglar acá porque si acertaste gana o pierde, por más que no haya penales, te pifia el número
+
+            if (resultBet == resultMatch) {
+                //Coincidió el resultado
+                erc20_prize_amount = PRIZE_MATCH_NO_PENALTIES;
+                if (resultMatch == MatchResult.TIED) {
+                    //Si hubo empate, ver los penales
+                    if( betPenaltyResult == matchPenaltyResult){ //acertó los penales también
+                        erc20_prize_amount += PRIZE_ONLY_PENALTIES;
+                        mintNFT = true;
                     }
+                } else { //No hubo penales, así que si acertó hay que darle el NFT
+                    mintNFT = true;
                 }
             }
         }
@@ -374,8 +374,12 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
         return matches[_matchId];
     }
 
-    modifier checkForPlayer(){
-        require(IAllowlist(allowlist_contract).getUserStatus(_msgSender()) || hasRole(DEFAULT_ADMIN_ROLE,_msgSender()),"No autorizado.");
+    modifier checkForPlayer() {
+        require(
+            IAllowlist(allowlist_contract).getUserStatus(_msgSender()) ||
+                hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "No autorizado."
+        );
         _;
     }
 }
