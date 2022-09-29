@@ -469,6 +469,8 @@ describe("PRODE QATAR 2022", () => {
                 BET_BASE);
             expect((await ProdeContract.gameData(val.address, "62e9ec549bfca97afc64000b")).betAmount).to.equal(BET_BASE);
             
+
+            let beforeReturn = await cryptoLinkToken.balanceOf(val.address);
             //Cambiar la apuesta, devolveme 1000 amigo.
             expect(await ProdeContract.connect(val).bet2("62e9ec549bfca97afc64000b",
                 0,
@@ -480,6 +482,11 @@ describe("PRODE QATAR 2022", () => {
             //    val.address,
             //    parseInt(BET_BASE * resultMatchArray[matchIdx % (resultMatchArray.length)].prize))
             expect((await ProdeContract.gameData(val.address, "62e9ec549bfca97afc64000b")).betAmount).to.equal(BET_BASE - 1000);
+
+            console.log("Llegué al balance.")
+
+            expect(await cryptoLinkToken.balanceOf(val.address)).to.equal(parseInt(beforeReturn)+1000);
+            console.log("Pasé el balance.")
 
             //Ahora cambio la apuesta, sumo 2000
             expect(await ProdeContract.connect(val).bet2("62e9ec549bfca97afc64000b",

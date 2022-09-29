@@ -11,7 +11,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "./DataTypesDeclaration.sol";
-import "hardhat/console.sol";
+
+//import "hardhat/console.sol";
 
 contract Prode is Pausable, AccessControl {
     /***    Roles   ***/
@@ -148,26 +149,25 @@ contract Prode is Pausable, AccessControl {
             ERROR_OUTATIME
         );
 
-
         //Lógica de la apuesta
+        Bet memory tempBet = gameData[_msgSender()][matchId];
 
-        if (gameData[_msgSender()][matchId].betAmount < betAmount) {
+        if (tempBet.betAmount < betAmount) {
             //Apuesta nueva o incrementa, hay que quitarle plata al usuario
             //Acá le quito tokens.
             ICryptoLink(erc20_contract).transferFrom(
                 _msgSender(),
                 address(this),
-                betAmount - gameData[_msgSender()][matchId].betAmount
+                betAmount - tempBet.betAmount
             );
             gameData[_msgSender()][matchId].betAmount = betAmount;
         } else {
-            if (gameData[_msgSender()][matchId].betAmount > betAmount) {
+            if (tempBet.betAmount > betAmount) {
                 //Está reduciendo apuesta, devolver plata.
+                uint giveBack = tempBet.betAmount -
+                    betAmount;
                 gameData[_msgSender()][matchId].betAmount = betAmount;
-                ICryptoLink(erc20_contract).transfer(
-                    _msgSender(),
-                    gameData[_msgSender()][matchId].betAmount - betAmount
-                );
+                ICryptoLink(erc20_contract).transfer(_msgSender(), giveBack);
             } //No hace falta este ELSE, porque solo hay que asignar los goles.
         }
         gameData[_msgSender()][matchId].goalA = goalA;
@@ -303,11 +303,13 @@ c) De no acertar el resultado del partido y no acertar el ganador por penales no
                 erc20_prize_amount = PRIZE_MATCH_NO_PENALTIES;
                 if (resultMatch == MatchResult.TIED) {
                     //Si hubo empate, ver los penales
-                    if( betPenaltyResult == matchPenaltyResult){ //acertó los penales también
+                    if (betPenaltyResult == matchPenaltyResult) {
+                        //acertó los penales también
                         erc20_prize_amount += PRIZE_ONLY_PENALTIES;
                         mintNFT = true;
                     }
-                } else { //No hubo penales, así que si acertó hay que darle el NFT
+                } else {
+                    //No hubo penales, así que si acertó hay que darle el NFT
                     mintNFT = true;
                 }
             }
