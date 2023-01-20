@@ -1,0 +1,7 @@
+{
+    "name": "Prueba NFT charla Cripto",
+    "description": "1er puesto en taller de laboratorio",
+    "image": "https://raw.githubusercontent.com/labinnovacion/poc-prode-qatar-2022/main/contracts/NFT/images/NFT_Taller_Laboratorio.mp4",
+    "animation_url": "https://raw.githubusercontent.com/labinnovacion/poc-prode-qatar-2022/main/contracts/NFT/images/NFT_Taller_Laboratorio.mp4",
+    "imagePreview": "https://raw.githubusercontent.com/labinnovacion/poc-prode-qatar-2022/main/contracts/NFT/images/NFT_Taller_Laboratorio.mp4"	
+}
